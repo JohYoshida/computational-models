@@ -12,6 +12,7 @@ export default function InputNumber(props) {
         onChange={evt => props.updateVal(evt)}
         />
       <input
+        style={inputStyle}
         type="number"
         min={typeof(props.min) !== "undefined" ? props.min : "1"}
         max={typeof(props.max) !== "undefined" ? props.max : "256"}
@@ -21,4 +22,8 @@ export default function InputNumber(props) {
         />
     </div>
   );
+}
+
+const inputStyle = {
+  width: 50,
 }
