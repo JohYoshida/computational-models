@@ -1,5 +1,5 @@
 export default function Cell(props) {
-  const { status, x, y } = props;
+  const { status } = props;
   if (status === "alive") {
     return (
       <div style={aliveCellStyle}></div>

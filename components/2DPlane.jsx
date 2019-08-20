@@ -15,7 +15,7 @@ export default function TwoDPlane(props) {
           status = "alive";
         }
       }
-      row.push(<Cell key={`${i}, ${j}`} status={status} x={j} y={i}/>);
+      row.push(<Cell key={`${i}, ${j}`} status={status} />);
     }
     Plane.push(<Row key={i} >{row}</Row>)
     row = [];
