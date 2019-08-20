@@ -1,5 +1,10 @@
+import Layout from "../components/Layout";
+
 export default function Index() {
   return (
-    <div>Computational Models</div>
-  )
+    <Layout>
+      <h1>Computational Models</h1>
+      <p>by Joh Yoshida</p>
+    </Layout>
+  );
 }
