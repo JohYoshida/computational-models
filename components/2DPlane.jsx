@@ -1,3 +1,5 @@
+import Cell from "./Cell";
+
 export default function TwoDPlane(props) {
   const { x, y, data } = props;
   const Plane = [];
@@ -31,20 +33,6 @@ const Row = props => {
   );
 };
 
-const Cell = props => {
-  const { status, x, y } = props;
-  if (status === "alive") {
-    return (
-      <div style={aliveCellStyle}></div>
-    );
-  }
-  if (status === "dead") {
-    return (
-      <div style={deadCellStyle}></div>
-    );
-  }
-};
-
 // Styles
 
 const planeStyle = {
@@ -56,16 +44,4 @@ const planeStyle = {
 const rowStyle = {
   display: "flex",
   flexDirection: "row",
-};
-
-const aliveCellStyle = {
-  backgroundColor: "#357a38",
-  height: 5,
-  width: 5
-};
-
-const deadCellStyle = {
-  backgroundColor: "#b28704",
-  height: 5,
-  width: 5
 };
