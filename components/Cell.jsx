@@ -1,17 +1,23 @@
 export default function Cell(props) {
-  let { status, size } = props;
+  let { status, size, color } = props;
   if (!size) {
     size = 5;
   }
 
   const aliveCellStyle = {
-    backgroundColor: "#357a38",
+    backgroundColor: color ? color : "#357a38",
     height: size,
     width: size
   };
 
   const deadCellStyle = {
-    backgroundColor: "#b28704",
+    backgroundColor: color ? color : "#b28704",
+    height: size,
+    width: size
+  };
+
+  const customCellStyle = {
+    backgroundColor: color,
     height: size,
     width: size
   };
@@ -22,7 +28,10 @@ export default function Cell(props) {
   if (status === "dead") {
     return <div style={deadCellStyle} />;
   }
-  return null
+  if (!status && color) {
+    return <div style={customCellStyle} />;
+  }
+  return null;
 }
 
 // Styles
