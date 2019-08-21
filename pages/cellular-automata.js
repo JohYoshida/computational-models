@@ -30,30 +30,32 @@ export default class CellularAutomata extends Component {
     return (
       <Layout>
         <Controls>
-          <InputNumber
-            name={"Rule"}
-            val={rule}
-            updateVal={this.updateRule}
-            min={0}
-            max={255}
-            displayValue={false}
-          />
-          <InputNumber
-            name="X"
-            val={x}
-            updateVal={this.updateInputX}
-            displayValue={false}
-          />
-          <RulePanel
-            changeRule={this.changeRule}
-            binaryRule={makeBinaryRule(rule)}
-            aliveColor={aliveColor}
-            deadColor={deadColor}
-          />
-          <ColorPicker id={1} updateColor={this.updateColor} />
-          <ColorPicker id={2} updateColor={this.updateColor} />
-          <div style={spawnChanceDivStyle}>
-            <Button name="Reset" onPress={this.resetStart} />
+          <div style={columnStyle}>
+            <InputNumber
+              name={"Rule"}
+              val={rule}
+              updateVal={this.updateRule}
+              min={0}
+              max={255}
+              displayValue={false}
+            />
+            <InputNumber
+              name="X"
+              val={x}
+              updateVal={this.updateInputX}
+              displayValue={false}
+            />
+            <div style={rowStyle}>
+              <Button name="Advance State" onPress={this.advanceState} />
+              <Button
+                name="Rapid Advance State"
+                onPress={this.rapidAdvanceState}
+              />
+            </div>
+            <div style={rowStyle}>
+              <Button name="Randomize Start" onPress={this.randomizeStart} />
+              <Button name="Reset" onPress={this.resetStart} />
+            </div>
             <InputNumber
               name="% Spawn Chance"
               val={spawnChance}
@@ -62,12 +64,18 @@ export default class CellularAutomata extends Component {
               max={99}
               displayNumber={false}
             />
-            <Button name="Randomize Start" onPress={this.randomizeStart} />
-            <Button name="Advance State" onPress={this.advanceState} />
-            <Button
-              name="Rapid Advance State"
-              onPress={this.rapidAdvanceState}
+          </div>
+          <div style={columnStyle}>
+            <RulePanel
+              changeRule={this.changeRule}
+              binaryRule={makeBinaryRule(rule)}
+              aliveColor={aliveColor}
+              deadColor={deadColor}
             />
+          </div>
+          <div style={columnStyle}>
+            <ColorPicker id={1} updateColor={this.updateColor} />
+            <ColorPicker id={2} updateColor={this.updateColor} />
           </div>
         </Controls>
         <TwoDPlane
@@ -104,7 +112,7 @@ export default class CellularAutomata extends Component {
     if (target === 2) {
       this.setState({ aliveColor: color });
     }
-  }
+  };
 
   updateRule = evt => {
     const rule = Number(evt.target.value);
@@ -162,9 +170,16 @@ export default class CellularAutomata extends Component {
   };
 }
 
-const spawnChanceDivStyle = {
+const rowStyle = {
   display: "flex",
-  flexDirection: "column"
+  flexDirection: "row"
+};
+
+const columnStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  margin: 10
 };
 
 function makeBinaryRule(rule) {
