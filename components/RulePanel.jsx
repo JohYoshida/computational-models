@@ -86,7 +86,11 @@ const Rule = props => {
       <Cell status={rule[2]} size={10} color={rule[2] === "alive" ? aliveColor : deadColor}/>
       <label>=</label>
       <span onClick={props.changeRule.bind(this, index, value)}>
-        <Cell status={value ? "alive" : "dead"} size={10} />
+        <Cell
+          status={value ? "alive" : "dead"}
+          size={10}
+          color={value ? aliveColor : deadColor}
+        />
       </span>
     </div>
   );
