@@ -5,6 +5,7 @@ import Controls from "../components/Controls";
 import InputNumber from "../components/InputNumber";
 import RulePanel from "../components/RulePanel";
 import Button from "../components/Button";
+import ColorPicker from "../components/ColorPicker";
 
 export default class CellularAutomata extends Component {
   constructor(props) {
@@ -14,12 +15,18 @@ export default class CellularAutomata extends Component {
       x: 20,
       y: 1,
       spawnChance: 50,
+      aliveColor: "#357a38",
+      deadColor: "#b28704",
       data: [{}]
     };
   }
 
+  componentDidMount() {
+    this.randomizeStart();
+  }
+
   render() {
-    const { rule, x, y, spawnChance } = this.state;
+    const { rule, x, y, spawnChance, aliveColor, deadColor } = this.state;
     return (
       <Layout>
         <Controls>
@@ -40,9 +47,13 @@ export default class CellularAutomata extends Component {
           <RulePanel
             changeRule={this.changeRule}
             binaryRule={makeBinaryRule(rule)}
+            aliveColor={aliveColor}
+            deadColor={deadColor}
           />
-          <Button name="Reset" onPress={this.resetStart} />
+          <ColorPicker id={1} updateColor={this.updateColor} />
+          <ColorPicker id={2} updateColor={this.updateColor} />
           <div style={spawnChanceDivStyle}>
+            <Button name="Reset" onPress={this.resetStart} />
             <InputNumber
               name="% Spawn Chance"
               val={spawnChance}
@@ -52,11 +63,21 @@ export default class CellularAutomata extends Component {
               displayNumber={false}
             />
             <Button name="Randomize Start" onPress={this.randomizeStart} />
+            <Button name="Advance State" onPress={this.advanceState} />
+            <Button
+              name="Rapid Advance State"
+              onPress={this.rapidAdvanceState}
+            />
           </div>
-          <Button name="Advance State" onPress={this.advanceState} />
-          <Button name="Rapid Advance State" onPress={this.rapidAdvanceState} />
         </Controls>
-        <TwoDPlane x={x} y={y} data={this.state.data} />
+        <TwoDPlane
+          x={x}
+          y={y}
+          data={this.state.data}
+          aliveColor={aliveColor}
+          deadColor={deadColor}
+          defaultStatus="dead"
+        />
       </Layout>
     );
   }
@@ -75,6 +96,15 @@ export default class CellularAutomata extends Component {
     const spawnChance = Number(evt.target.value);
     this.setState({ spawnChance });
   };
+
+  updateColor = (target, color) => {
+    if (target === 1) {
+      this.setState({ deadColor: color });
+    }
+    if (target === 2) {
+      this.setState({ aliveColor: color });
+    }
+  }
 
   updateRule = evt => {
     const rule = Number(evt.target.value);
@@ -113,7 +143,7 @@ export default class CellularAutomata extends Component {
     for (var i = 0; i < this.state.x; i++) {
       this.advanceState();
     }
-  }
+  };
 
   resetStart = () => {
     this.setState({ y: 1, data: [{}] });
@@ -130,13 +160,12 @@ export default class CellularAutomata extends Component {
     }
     this.setState({ y: 1, data });
   };
-
 }
 
 const spawnChanceDivStyle = {
   display: "flex",
   flexDirection: "column"
-}
+};
 
 function makeBinaryRule(rule) {
   let binaryRule = rule.toString(2);
