@@ -11,26 +11,22 @@ export default function TwoDPlane(props) {
       // Check position against data and set status
       let status = "dead";
       if (data[i - 1]) {
-        if (data[i- 1][j - 1]) {
+        if (data[i - 1][j - 1]) {
           status = "alive";
         }
       }
       row.push(<Cell key={`${i}, ${j}`} status={status} />);
     }
-    Plane.push(<Row key={i} >{row}</Row>)
+    Plane.push(<Row key={i}>{row}</Row>);
     row = [];
   }
-  return (
-    <div style={planeStyle}>{Plane}</div>
-  );
+  return <div style={planeStyle}>{Plane}</div>;
 }
 
 // Components
 
 const Row = props => {
-  return (
-    <div style={rowStyle}>{props.children}</div>
-  );
+  return <div style={rowStyle}>{props.children}</div>;
 };
 
 // Styles
@@ -38,10 +34,10 @@ const Row = props => {
 const planeStyle = {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+  alignItems: "center"
 };
 
 const rowStyle = {
   display: "flex",
-  flexDirection: "row",
+  flexDirection: "row"
 };

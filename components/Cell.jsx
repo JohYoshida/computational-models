@@ -17,15 +17,11 @@ export default function Cell(props) {
   };
 
   if (status === "alive") {
-    return (
-      <div style={aliveCellStyle}></div>
-    );
+    return <div style={aliveCellStyle} />;
   }
   if (status === "dead") {
-    return (
-      <div style={deadCellStyle}></div>
-    );
+    return <div style={deadCellStyle} />;
   }
-};
+}
 
 // Styles

@@ -1,8 +1,6 @@
-import Header from './Header';
+import Header from "./Header";
 
-const layoutStyle = {
-
-}
+const layoutStyle = {};
 
 export default function Layout(props) {
   return (
@@ -10,5 +8,5 @@ export default function Layout(props) {
       <Header />
       {props.children}
     </div>
-  )
+  );
 }

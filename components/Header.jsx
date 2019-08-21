@@ -1,9 +1,9 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const linkStyle = {
   marginRight: 15,
-  textDecoration: "none",
-}
+  textDecoration: "none"
+};
 
 const layoutStyle = {
   paddingBottom: 10,
@@ -11,8 +11,8 @@ const layoutStyle = {
   boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.06)",
   display: "flex",
   justifyContent: "space-around",
-  alignItems: "center",
-}
+  alignItems: "center"
+};
 
 export default function Header() {
   return (
@@ -31,5 +31,5 @@ export default function Header() {
         <a style={linkStyle}>Godel Escher Bach: Figure/Ground</a>
       </Link>
     </div>
-  )
+  );
 }
