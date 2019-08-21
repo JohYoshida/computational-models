@@ -1,6 +1,6 @@
 export default function InputNumber(props) {
 
-  const range = (props.range === false) ? null : (
+  const range = (props.displayRange === false) ? null : (
     <input
       type="range"
       name="X"
@@ -12,7 +12,7 @@ export default function InputNumber(props) {
     />
   );
 
-  const number = (props.number === false) ? null : (
+  const number = (props.displayNumber === false) ? null : (
     <input
       style={inputStyle}
       type="number"
@@ -24,11 +24,14 @@ export default function InputNumber(props) {
     />
   );
 
+  const value = (props.displayValue === false) ? null : props.val;
+
   return (
     <div>
       <label>{props.name}</label>
       { range }
       { number }
+      { value }
     </div>
   );
 }
