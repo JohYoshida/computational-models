@@ -82,8 +82,8 @@ export default class CellularAutomata extends Component {
           x={x}
           y={y}
           data={this.state.data}
-          aliveColor={aliveColor}
-          deadColor={deadColor}
+          firstColor={deadColor}
+          secondColor={aliveColor}
           defaultStatus="dead"
         />
       </Layout>
