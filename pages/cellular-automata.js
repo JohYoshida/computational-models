@@ -13,12 +13,13 @@ export default class CellularAutomata extends Component {
       rule: 22,
       x: 20,
       y: 1,
+      spawnChance: 50,
       data: [{}]
     };
   }
 
   render() {
-    const { rule, x, y } = this.state;
+    const { rule, x, y, spawnChance } = this.state;
     return (
       <Layout>
         <Controls>
@@ -26,17 +27,34 @@ export default class CellularAutomata extends Component {
             name={"Rule"}
             val={rule}
             updateVal={this.updateRule}
-            max={255}
             min={0}
+            max={255}
+            displayValue={false}
           />
-          <InputNumber name={"X"} val={x} updateVal={this.updateInputX} />
+          <InputNumber
+            name="X"
+            val={x}
+            updateVal={this.updateInputX}
+            displayValue={false}
+          />
           <RulePanel
             changeRule={this.changeRule}
             binaryRule={makeBinaryRule(rule)}
           />
           <Button name="Reset" onPress={this.resetStart} />
-          <Button name="Randomize Start" onPress={this.randomizeStart} />
+          <div style={spawnChanceDivStyle}>
+            <InputNumber
+              name="% Spawn Chance"
+              val={spawnChance}
+              updateVal={this.updateSpawnChance}
+              min={1}
+              max={99}
+              displayNumber={false}
+            />
+            <Button name="Randomize Start" onPress={this.randomizeStart} />
+          </div>
           <Button name="Advance State" onPress={this.advanceState} />
+          <Button name="Rapid Advance State" onPress={this.rapidAdvanceState} />
         </Controls>
         <TwoDPlane x={x} y={y} data={this.state.data} />
       </Layout>
@@ -51,6 +69,11 @@ export default class CellularAutomata extends Component {
   updateInputY = evt => {
     const y = Number(evt.target.value);
     this.setState({ y });
+  };
+
+  updateSpawnChance = evt => {
+    const spawnChance = Number(evt.target.value);
+    this.setState({ spawnChance });
   };
 
   updateRule = evt => {
@@ -83,24 +106,36 @@ export default class CellularAutomata extends Component {
       }
     }
     data.push(state);
-    this.setState({ y: y + 1, data });
+    this.setState({ y: data.length, data });
   };
+
+  rapidAdvanceState = () => {
+    for (var i = 0; i < this.state.x; i++) {
+      this.advanceState();
+    }
+  }
 
   resetStart = () => {
     this.setState({ y: 1, data: [{}] });
   };
 
   randomizeStart = () => {
-    const { x } = this.state;
+    const { x, spawnChance } = this.state;
     const data = [{}];
     for (var i = 1; i <= x; i++) {
-      let random = Math.floor(Math.random() * 2);
-      if (random > 0) {
+      let random = Math.floor(Math.random() * 100) + 1;
+      if (random < spawnChance) {
         data[0][i] = "alive";
       }
     }
-    this.setState({ y: 1, data: data });
+    this.setState({ y: 1, data });
   };
+
+}
+
+const spawnChanceDivStyle = {
+  display: "flex",
+  flexDirection: "column"
 }
 
 function makeBinaryRule(rule) {
