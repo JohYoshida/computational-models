@@ -13,7 +13,7 @@ export default function TwoDPlane(props) {
       let status;
       if (data[index]) {
         status = data[index][j] ? data[index][j] : "dead";
-      } else status = "dead"
+      } else status = "dead";
       row.push(<Cell key={`${i}, ${j}`} status={status} />);
     }
     Plane.push(<Row key={i}>{row}</Row>);
