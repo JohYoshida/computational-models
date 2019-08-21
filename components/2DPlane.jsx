@@ -9,12 +9,11 @@ export default function TwoDPlane(props) {
     // Make columns
     for (var j = 1; j <= x; j++) {
       // Check position against data and set status
-      let status = "dead";
-      if (data[i - 1]) {
-        if (data[i - 1][j - 1]) {
-          status = "alive";
-        }
-      }
+      let index = i - 1;
+      let status;
+      if (data[index]) {
+        status = data[index][j] ? data[index][j] : "dead";
+      } else status = "dead"
       row.push(<Cell key={`${i}, ${j}`} status={status} />);
     }
     Plane.push(<Row key={i}>{row}</Row>);
