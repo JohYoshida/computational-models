@@ -22,6 +22,7 @@ export default function Cell(props) {
   if (status === "dead") {
     return <div style={deadCellStyle} />;
   }
+  return null
 }
 
 // Styles
