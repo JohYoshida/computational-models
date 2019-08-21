@@ -33,6 +33,8 @@ export default function InputNumber(props) {
   );
 }
 
+// Styles
+
 const inputStyle = {
   width: 50
 };
