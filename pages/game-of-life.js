@@ -137,7 +137,11 @@ export default class GameOfLife extends Component {
   }
 
   evolve = () => {
-
+    for (var i = 0; i < 10; i++) {
+      setTimeout(() => {
+        this.stepForward();
+      }, 1000);
+    }
   }
 
   setStamp = type => {
