@@ -5,11 +5,11 @@ export default function TwoDPlane(props) {
   const Plane = [];
   let row = [];
   // Set click function
-  let click = props.click ? (props.click) : () => {};
+  let click = props.click ? props.click : () => {};
   // Set mouse enter function
-  let mouseEnter = props.mouseEnter ? (props.mouseEnter) : () => {};
+  let mouseEnter = props.mouseEnter ? props.mouseEnter : () => {};
   // Set mouse leave function
-  let mouseLeave = props.mouseLeave ? (props.mouseLeave) : () => {};
+  let mouseLeave = props.mouseLeave ? props.mouseLeave : () => {};
 
   // Make rows
   for (var i = 1; i <= y; i++) {
@@ -22,7 +22,7 @@ export default function TwoDPlane(props) {
         status = data[index][j] ? data[index][j] : defaultStatus;
         color = data[index][j] ? props.secondColor : props.firstColor;
       } else {
-        status = defaultStatus
+        status = defaultStatus;
         color = props.firstColor;
       }
       row.push(
