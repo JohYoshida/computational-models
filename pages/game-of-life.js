@@ -19,6 +19,7 @@ export default class GameOfLife extends Component {
       history: [[]],
       aliveColor: "#357a38",
       deadColor: "#b28704",
+      stamp: "Cell",
     };
   }
 
