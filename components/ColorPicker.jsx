@@ -17,67 +17,121 @@ export default function ColorPicker(props) {
     "#b2a429",
     "#b28704",
     "#b26a00",
-    "#b23c17",
+    "#b23c17"
   ];
-  const { id, updateColor } = props;
+  const { id, updateColor, current } = props;
+
   return (
     <div style={colorPickerStyle}>
       <label>Color {id}</label>
       <div style={row}>
-        <div onClick={updateColor.bind(this, id, colors[0])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[0])}
+        >
           <Cell size={10} color={colors[0]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[1])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[1])}
+        >
           <Cell size={10} color={colors[1]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[2])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[2])}
+        >
           <Cell size={10} color={colors[2]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[3])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[3])}
+        >
           <Cell size={10} color={colors[3]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[4])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[4])}
+        >
           <Cell size={10} color={colors[4]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[5])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[5])}
+        >
           <Cell size={10} color={colors[5]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[6])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[6])}
+        >
           <Cell size={10} color={colors[6]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[7])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[7])}
+        >
           <Cell size={10} color={colors[7]} />
         </div>
       </div>
       <div style={row}>
-        <div onClick={updateColor.bind(this, id, colors[8])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[8])}
+        >
           <Cell size={10} color={colors[8]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[9])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[9])}
+        >
           <Cell size={10} color={colors[9]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[10])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[10])}
+        >
           <Cell size={10} color={colors[10]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[11])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[11])}
+        >
           <Cell size={10} color={colors[11]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[12])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[12])}
+        >
           <Cell size={10} color={colors[12]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[13])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[13])}
+        >
           <Cell size={10} color={colors[13]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[14])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[14])}
+        >
           <Cell size={10} color={colors[14]} />
         </div>
-        <div onClick={updateColor.bind(this, id, colors[15])} >
+        <div
+          style={containerStyle}
+          onClick={updateColor.bind(this, id, colors[15])}
+        >
           <Cell size={10} color={colors[15]} />
         </div>
       </div>
     </div>
   );
 }
+
+const containerStyle = {
+  borderRight: "1px solid white",
+  marginBottom: 1
+};
 
 const colorPickerStyle = {
   display: "flex",
