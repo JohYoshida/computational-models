@@ -84,8 +84,9 @@ export default class GameOfLife extends Component {
   }
 
   updateInputStep = evt => {
+    const { history } = this.state;
     const step = Number(evt.target.value);
-    this.setState({ step });
+    this.setState({ step, data: history[step - 1] });
   }
 
   randomize = () => {
