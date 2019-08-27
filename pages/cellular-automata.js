@@ -45,6 +45,18 @@ export default class CellularAutomata extends Component {
               updateVal={this.updateInputX}
               displayValue={false}
             />
+            <InputNumber
+              name="Spawn Chance"
+              val={spawnChance}
+              updateVal={this.updateSpawnChance}
+              min={1}
+              max={99}
+              displayNumber={false}
+            />
+            <div style={rowStyle}>
+              <Button name="Randomize Start" onPress={this.randomizeStart} />
+              <Button name="Reset" onPress={this.resetStart} />
+            </div>
             <div style={rowStyle}>
               <Button name="Advance State" onPress={this.advanceState} />
               <Button
@@ -52,18 +64,6 @@ export default class CellularAutomata extends Component {
                 onPress={this.rapidAdvanceState}
               />
             </div>
-            <div style={rowStyle}>
-              <Button name="Randomize Start" onPress={this.randomizeStart} />
-              <Button name="Reset" onPress={this.resetStart} />
-            </div>
-            <InputNumber
-              name="% Spawn Chance"
-              val={spawnChance}
-              updateVal={this.updateSpawnChance}
-              min={1}
-              max={99}
-              displayNumber={false}
-            />
           </div>
           <div style={columnStyle}>
             <RulePanel
