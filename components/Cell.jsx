@@ -10,8 +10,8 @@ export default function Cell(props) {
   // Set mouse leave function
   !mouseLeave ? (mouseLeave = null) : (mouseLeave = mouseLeave);
 
+  // Configure styles
   let rgb = color ? hexToRgb(color) : hexToRgb("#BDBDBD");
-  // Styles
   const aliveCellStyle = {
     backgroundColor: color ? color : "#357a38",
     height: size,
@@ -45,7 +45,6 @@ export default function Cell(props) {
   if (!status && color) {
     style = customCellStyle;
   }
-
 
   return (
     <div
