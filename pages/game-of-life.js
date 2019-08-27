@@ -113,11 +113,26 @@ export default class GameOfLife extends Component {
   }
 
   stepForward = () => {
-
+    const { x, y, data, history } = this.state;
+    const newData = [];
+    for (var i = 0; i < y; i++) {
+      let row = {};
+      for (var j = 1; j <= x; j++) {
+        let isAlive = data[i][j] ? true : false;
+        // check neighbors
+        let neighbourCount = countNeighbours(data, i, j, x, y);
+        // decide fate
+        let willLive = decideFate(isAlive, neighbourCount);
+        if (willLive) row[j] = "alive";
+      }
+      newData.push(row);
+    }
+    history.push(newData);
+    this.setState({ data: newData, history, step: history.length });
   }
 
   evolve = () => {
-    
+
   }
 
   setStamp = type => {
@@ -136,3 +151,64 @@ const columnStyle = {
   alignItems: "center",
   margin: 10
 };
+
+function countNeighbours(data, i, j, x, y) {
+  let aliveCount = 0;
+  const above = (i - 1 >= 0) ? i - 1 : y - 1;
+  const below = (i + 1 < y) ? i + 1 : 0;
+  const left = (j - 1 >= 1) ? j - 1 : y;
+  const right = (j + 1 <= y) ? j + 1 : 1
+  // check above left
+  if (data[above][left] === "alive") aliveCount++;
+  // check above
+  if (data[above][j] === "alive") aliveCount++;
+  // check above right
+  if (data[above][right] === "alive") aliveCount++;
+  // check left
+  if (data[i][left] === "alive") aliveCount++;
+  // check right
+  if (data[i][right] === "alive") aliveCount++;
+  // check below left
+  if (data[below][left] === "alive") aliveCount++;
+  // check below
+  if (data[below][j] === "alive") aliveCount++;
+  // check below right
+  if (data[below][right] === "alive") aliveCount++;
+  return aliveCount;
+}
+
+function decideFate(isAlive, aliveCount) {
+  let willLive;
+  if (isAlive) {
+    switch (aliveCount) {
+      case 0: // underpopulation
+      case 1: // underpopulation
+        willLive = false;
+        break;
+      case 2: // survival
+      case 3: // survival
+        willLive = true;
+        break;
+      case 4: // overpopulation
+      case 5: // overpopulation
+      case 6: // overpopulation
+      case 7: // overpopulation
+      case 8: // overpopulation
+        willLive = false;
+        break;
+      default:
+        console.log(
+          "Something went wrong in decideFate function.",
+          id,
+          aliveCount,
+          isAlive
+        );
+    }
+  } else {
+    if (aliveCount === 3) {
+      // reproduction
+      willLive = true;
+    } else willLive = false;
+  }
+  return willLive
+}
