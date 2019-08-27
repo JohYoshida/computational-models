@@ -35,10 +35,10 @@ export default class GameOfLIfe extends Component {
             />
           // TODO: add onPress functions
             <div style={rowStyle}>
-              <Button name="Randomize" onPress={""} />
-              <Button name="Reset" onPress={""} />
-              <Button name="Step Forward One Stage" onPress={""} />
-              <Button name="Evolve!" onPress={""} />
+              <Button name="Randomize" onPress={this.randomize} />
+              <Button name="Reset" onPress={this.reset} />
+              <Button name="Step Forward One Stage" onPress={this.stepForward} />
+              <Button name="Evolve!" onPress={this.evolve} />
             </div>
             // TODO: add max value
             <InputNumber
@@ -48,9 +48,9 @@ export default class GameOfLIfe extends Component {
               displayNumber={false}
             />
             <div style={rowStyle}>
-              <Button name="Cell" onPress={""} />
-              <Button name="Diamond" onPress={""} />
-              <Button name="Pulsar" onPress={""} />
+              <Button name="Cell" onPress={this.setStamp.bind(this, "Cell")} />
+              <Button name="Diamond" onPress={this.setStamp.bind(this, "Diamond")} />
+              <Button name="Pulsar" onPress={this.setStamp.bind(this, "Pulsar")} />
             </div>
           </div>
         </Controls>
@@ -71,6 +71,26 @@ export default class GameOfLIfe extends Component {
   updateInputStage = evt => {
     const stage = Number(evt.target.value);
     this.setState({ stage });
+  }
+
+  randomize = () => {
+
+  }
+
+  reset = () => {
+
+  }
+
+  stepForward = () => {
+
+  }
+
+  evolve = () => {
+    
+  }
+
+  setStamp = type => {
+    console.log(type);
   }
 }
 
