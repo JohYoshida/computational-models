@@ -65,9 +65,9 @@ export default class GameOfLife extends Component {
               displayNumber={false}
             />
             <div style={rowStyle}>
-              <Button name="Cell" onPress={this.setStamp.bind(this, "Cell")} />
-              <Button name="Diamond" onPress={this.setStamp.bind(this, "Diamond")} />
-              <Button name="Pulsar" onPress={this.setStamp.bind(this, "Pulsar")} />
+              <Button name="Cell" onPress={this.changeStamp.bind(this, "Cell")} />
+              <Button name="Diamond" onPress={this.changeStamp.bind(this, "Diamond")} />
+              <Button name="Pulsar" onPress={this.changeStamp.bind(this, "Pulsar")} />
             </div>
           </div>
           <div style={columnStyle} >
@@ -220,8 +220,8 @@ export default class GameOfLife extends Component {
     }
   }
 
-  setStamp = type => {
-    console.log(type);
+  changeStamp = type => {
+    this.setState({ stamp: type })
   }
 }
 
