@@ -6,6 +6,10 @@ export default function TwoDPlane(props) {
   let row = [];
   // Set click function
   let click = props.click ? (props.click) : () => {};
+  // Set mouse enter function
+  let mouseEnter = props.mouseEnter ? (props.mouseEnter) : () => {};
+  // Set mouse leave function
+  let mouseLeave = props.mouseLeave ? (props.mouseLeave) : () => {};
 
   // Make rows
   for (var i = 1; i <= y; i++) {
@@ -27,6 +31,8 @@ export default function TwoDPlane(props) {
           status={status}
           color={color}
           click={click.bind(this, i - 1, j)}
+          mouseEnter={mouseEnter.bind(this, i - 1, j)}
+          mouseLeave={mouseLeave.bind(this, i - 1, j)}
         />
       );
     }

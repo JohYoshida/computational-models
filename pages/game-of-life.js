@@ -83,6 +83,8 @@ export default class GameOfLife extends Component {
           secondColor={aliveColor}
           defaultStatus="dead"
           click={this.handleClick}
+          mouseEnter={this.handleMouseEnter}
+          mouseLeave={this.handleMouseLeave}
         />
         <KeyHandler keyValue="a" onKeyHandle={this.handleKeyPress} />
         <KeyHandler keyValue="d" onKeyHandle={this.handleKeyPress} />
@@ -140,6 +142,18 @@ export default class GameOfLife extends Component {
     data[i][j] ? (data[i][j] = null) : (data[i][j] = "alive");
     history[step - 1] = data;
     this.setState({ data, history });
+  }
+
+  handleMouseEnter = (i, j) => {
+    const { data } = this.state;
+    data[i][j] ? (data[i][j] += " hover") : (data[i][j] = "hover");
+    this.setState({ data });
+  }
+
+  handleMouseLeave = (i, j) => {
+    const { data } = this.state;
+    data[i][j] == "hover" ? (delete data[i][j]) : (data[i][j] = (data[i][j].replace(" hover", "")));
+    this.setState({ data });
   }
 
   updateColor = (target, color) => {
