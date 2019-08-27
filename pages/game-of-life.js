@@ -82,6 +82,7 @@ export default class GameOfLife extends Component {
           firstColor={deadColor}
           secondColor={aliveColor}
           defaultStatus="dead"
+          click={this.handleClick}
         />
         <KeyHandler keyValue="a" onKeyHandle={this.handleKeyPress} />
         <KeyHandler keyValue="d" onKeyHandle={this.handleKeyPress} />
@@ -132,6 +133,13 @@ export default class GameOfLife extends Component {
         });
       }
     }
+  }
+
+  handleClick = (i, j) => {
+    const { data, history, step } = this.state;
+    data[i][j] ? (data[i][j] = null) : (data[i][j] = "alive");
+    history[step - 1] = data;
+    this.setState({ data, history });
   }
 
   updateColor = (target, color) => {

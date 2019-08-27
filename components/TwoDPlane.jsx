@@ -4,6 +4,9 @@ export default function TwoDPlane(props) {
   const { x, y, data, firstColor, secondColor, defaultStatus } = props;
   const Plane = [];
   let row = [];
+  // Set click function
+  let click = props.click ? (props.click) : () => {};
+
   // Make rows
   for (var i = 1; i <= y; i++) {
     // Make columns
@@ -17,8 +20,15 @@ export default function TwoDPlane(props) {
       } else {
         status = defaultStatus
         color = props.firstColor;
-      };
-      row.push(<Cell key={`${i}, ${j}`} status={status} color={color}/>);
+      }
+      row.push(
+        <Cell
+          key={`${i}, ${j}`}
+          status={status}
+          color={color}
+          click={click.bind(this, i - 1, j)}
+        />
+      );
     }
     Plane.push(<Row key={i}>{row}</Row>);
     row = [];
