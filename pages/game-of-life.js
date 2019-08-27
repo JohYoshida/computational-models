@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import Controls from "../components/Controls";
 import InputNumber from "../components/InputNumber";
 import Button from "../components/Button";
+import TwoDPlane from "../components/TwoDPlane";
 
 export default class GameOfLIfe extends Component {
   constructor(props) {
@@ -10,13 +11,16 @@ export default class GameOfLIfe extends Component {
     this.state = {
       x: 25,
       y: 25,
-      stage: 0,
-      data: [{}]
+      stage: 1,
+      data: [{3: "alive"}],
+      history: [[]],
+      aliveColor: "#357a38",
+      deadColor: "#b28704",
     };
   }
 
   render() {
-    const { x, y, stage, data } = this.state;
+    const { x, y, stage, data, history, aliveColor, deadColor } = this.state;
     return (
       <Layout>
         <Controls>
@@ -54,6 +58,14 @@ export default class GameOfLIfe extends Component {
             </div>
           </div>
         </Controls>
+        <TwoDPlane
+          x={x}
+          y={y}
+          data={data}
+          firstColor={deadColor}
+          secondColor={aliveColor}
+          defaultStatus="dead"
+        />
       </Layout>
     );
   }
