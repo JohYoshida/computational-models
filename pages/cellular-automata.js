@@ -32,7 +32,7 @@ export default class CellularAutomata extends Component {
         <Controls>
           <div style={columnStyle}>
             <InputNumber
-              name={"Rule"}
+              name="Rule"
               val={rule}
               updateVal={this.updateRule}
               min={0}
