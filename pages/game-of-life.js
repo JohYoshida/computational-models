@@ -5,7 +5,7 @@ import InputNumber from "../components/InputNumber";
 import Button from "../components/Button";
 import TwoDPlane from "../components/TwoDPlane";
 
-export default class GameOfLIfe extends Component {
+export default class GameOfLife extends Component {
   constructor(props) {
     super(props);
     this.state = {
