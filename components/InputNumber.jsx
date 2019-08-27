@@ -3,7 +3,7 @@ export default function InputNumber(props) {
     props.displayRange === false ? null : (
       <input
         type="range"
-        name="X"
+        name={props.name}
         min={typeof props.min !== "undefined" ? props.min : "1"}
         max={typeof props.max !== "undefined" ? props.max : "256"}
         step="1"
@@ -17,6 +17,7 @@ export default function InputNumber(props) {
       <input
         style={inputStyle}
         type="number"
+        name={props.name}
         min={typeof props.min !== "undefined" ? props.min : "1"}
         max={typeof props.max !== "undefined" ? props.max : "256"}
         step="1"
