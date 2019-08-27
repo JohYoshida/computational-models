@@ -11,6 +11,7 @@ export default class GameOfLife extends Component {
     this.state = {
       x: 25,
       y: 25,
+      spawnChance: 50,
       step: 1,
       data: [{}],
       history: [[]],
@@ -24,7 +25,7 @@ export default class GameOfLife extends Component {
   }
 
   render() {
-    const { x, y, step, data, history, aliveColor, deadColor } = this.state;
+    const { x, y, spawnChance, step, data, history, aliveColor, deadColor } = this.state;
     return (
       <Layout>
         <Controls>
@@ -39,6 +40,13 @@ export default class GameOfLife extends Component {
               name={"Y"}
               val={y}
               updateVal={this.updateInputY}
+              displayValue={false}
+            />
+            <InputNumber
+              name={"Random Spawn Chance"}
+              val={spawnChance}
+              max={100}
+              updateVal={this.updateInputSpawnChance}
               displayValue={false}
             />
             <div style={rowStyle}>
@@ -83,6 +91,11 @@ export default class GameOfLife extends Component {
     this.setState({ y });
   }
 
+  updateInputSpawnChance = evt => {
+    const spawnChance = Number(evt.target.value);
+    this.setState({ spawnChance });
+  }
+
   updateInputStep = evt => {
     const { history } = this.state;
     const step = Number(evt.target.value);
@@ -90,14 +103,14 @@ export default class GameOfLife extends Component {
   }
 
   randomize = () => {
-    const { x, y } = this.state;
+    const { x, y, spawnChance } = this.state;
     const data = [];
     const history = [];
     for (var i = 1; i <= y; i++) {
       let row = {};
       for (var j = 1; j <= x; j++) {
         let random = Math.floor(Math.random() * 100) + 1;
-        if (random < 50) {
+        if (random <= spawnChance) {
           row[j] = "alive";
         }
       }
