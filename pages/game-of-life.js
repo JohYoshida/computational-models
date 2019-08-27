@@ -107,8 +107,12 @@ export default class GameOfLife extends Component {
   }
 
   reset = () => {
-    const history = [[{}]];
-    const data = history[0];
+    const { y } = this.state;
+    const data = [];
+    for (var i = 0; i < y; i++) {
+      data.push({});
+    }
+    const history = [data];
     this.setState({ step: 1, data, history });
   }
 
