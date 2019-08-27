@@ -180,22 +180,30 @@ function countNeighbours(data, i, j, x, y) {
   const below = (i + 1 < y) ? i + 1 : 0;
   const left = (j - 1 >= 1) ? j - 1 : y;
   const right = (j + 1 <= y) ? j + 1 : 1
-  // check above left
-  if (data[above][left] === "alive") aliveCount++;
-  // check above
-  if (data[above][j] === "alive") aliveCount++;
-  // check above right
-  if (data[above][right] === "alive") aliveCount++;
+  if (!data[above]) {
+    data[above] =  {};
+  } else {
+    // check above left
+    if (data[above][left] === "alive") aliveCount++;
+    // check above
+    if (data[above][j] === "alive") aliveCount++;
+    // check above right
+    if (data[above][right] === "alive") aliveCount++;
+  }
   // check left
   if (data[i][left] === "alive") aliveCount++;
   // check right
   if (data[i][right] === "alive") aliveCount++;
-  // check below left
-  if (data[below][left] === "alive") aliveCount++;
-  // check below
-  if (data[below][j] === "alive") aliveCount++;
-  // check below right
-  if (data[below][right] === "alive") aliveCount++;
+  if (!data[below]) {
+    data[below] = {};
+  } else {
+    // check below left
+    if (data[below][left] === "alive") aliveCount++;
+    // check below
+    if (data[below][j] === "alive") aliveCount++;
+    // check below right
+    if (data[below][right] === "alive") aliveCount++;
+  }
   return aliveCount;
 }
 
