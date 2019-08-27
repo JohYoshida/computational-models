@@ -11,7 +11,7 @@ export default class GameOfLife extends Component {
     this.state = {
       x: 25,
       y: 25,
-      stage: 1,
+      step: 1,
       data: [{}],
       history: [[]],
       aliveColor: "#357a38",
@@ -24,7 +24,7 @@ export default class GameOfLife extends Component {
   }
 
   render() {
-    const { x, y, stage, data, history, aliveColor, deadColor } = this.state;
+    const { x, y, step, data, history, aliveColor, deadColor } = this.state;
     return (
       <Layout>
         <Controls>
@@ -44,14 +44,14 @@ export default class GameOfLife extends Component {
             <div style={rowStyle}>
               <Button name="Randomize" onPress={this.randomize} />
               <Button name="Reset" onPress={this.reset} />
-              <Button name="Step Forward One Stage" onPress={this.stepForward} />
+              <Button name="Step Forward" onPress={this.stepForward} />
               <Button name="Evolve!" onPress={this.evolve} />
             </div>
             <InputNumber
-              name={"Stage"}
-              val={stage}
+              name={"Step"}
+              val={step}
               max={history.length}
-              updateVal={this.updateInputStage}
+              updateVal={this.updateInputStep}
               displayNumber={false}
             />
             <div style={rowStyle}>
@@ -83,9 +83,9 @@ export default class GameOfLife extends Component {
     this.setState({ y });
   }
 
-  updateInputStage = evt => {
-    const stage = Number(evt.target.value);
-    this.setState({ stage });
+  updateInputStep = evt => {
+    const step = Number(evt.target.value);
+    this.setState({ step });
   }
 
   randomize = () => {
@@ -103,13 +103,13 @@ export default class GameOfLife extends Component {
       data.push(row);
     }
     history.push(data);
-    this.setState({ stage: 1, data, history });
+    this.setState({ step: 1, data, history });
   }
 
   reset = () => {
     const history = [[{}]];
     const data = history[0];
-    this.setState({ stage: 1, data, history });
+    this.setState({ step: 1, data, history });
   }
 
   stepForward = () => {
