@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Layout from "../components/Layout";
-import TwoDPlane from "../components/2DPlane";
+import TwoDPlane from "../components/TwoDPlane";
 import Controls from "../components/Controls";
 import InputNumber from "../components/InputNumber";
 import RulePanel from "../components/RulePanel";
