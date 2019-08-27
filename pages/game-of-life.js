@@ -1,4 +1,5 @@
 import { Component } from "react";
+import KeyHandler from "react-key-handler";
 import Layout from "../components/Layout";
 import Controls from "../components/Controls";
 import InputNumber from "../components/InputNumber";
@@ -77,6 +78,8 @@ export default class GameOfLife extends Component {
           secondColor={aliveColor}
           defaultStatus="dead"
         />
+        <KeyHandler keyValue="a" onKeyHandle={this.handleKeyPress} />
+        <KeyHandler keyValue="d" onKeyHandle={this.handleKeyPress} />
       </Layout>
     );
   }
@@ -100,6 +103,30 @@ export default class GameOfLife extends Component {
     const { history } = this.state;
     const step = Number(evt.target.value);
     this.setState({ step, data: history[step - 1] });
+  }
+
+  handleKeyPress = evt => {
+    const { history, data, step } = this.state;
+    if (evt.key === "a") {
+      if (history.length > 1 && step > 1) {
+        this.setState({
+          data: history[step - 2],
+          step: step - 1
+        });
+      }
+    }
+    if (evt.key === "d") {
+      if (history.length === step) {
+        // Most recent state
+        this.stepForward();
+      } else {
+        // Intermediate state
+        this.setState({
+          data: history[step],
+          step: step + 1
+        });
+      }
+    }
   }
 
   randomize = () => {
