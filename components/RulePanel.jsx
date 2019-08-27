@@ -81,9 +81,21 @@ const Rule = props => {
   return (
     <div style={ruleStyle}>
       <label>{num}</label>
-      <Cell status={rule[0]} size={10} color={rule[0] === "alive" ? aliveColor : deadColor}/>
-      <Cell status={rule[1]} size={10} color={rule[1] === "alive" ? aliveColor : deadColor}/>
-      <Cell status={rule[2]} size={10} color={rule[2] === "alive" ? aliveColor : deadColor}/>
+      <Cell
+        status={rule[0]}
+        size={10}
+        color={rule[0] === "alive" ? aliveColor : deadColor}
+      />
+      <Cell
+        status={rule[1]}
+        size={10}
+        color={rule[1] === "alive" ? aliveColor : deadColor}
+      />
+      <Cell
+        status={rule[2]}
+        size={10}
+        color={rule[2] === "alive" ? aliveColor : deadColor}
+      />
       <label>=</label>
       <span onClick={props.changeRule.bind(this, index, value)}>
         <Cell

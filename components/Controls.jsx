@@ -1,9 +1,5 @@
 export default function Controls(props) {
-  return (
-    <div style={controlsStyle}>
-      {props.children}
-    </div>
-  );
+  return <div style={controlsStyle}>{props.children}</div>;
 }
 
 // Styles
