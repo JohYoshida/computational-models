@@ -37,17 +37,16 @@ export default class GameOfLIfe extends Component {
               updateVal={this.updateInputY}
               displayValue={false}
             />
-          // TODO: add onPress functions
             <div style={rowStyle}>
               <Button name="Randomize" onPress={this.randomize} />
               <Button name="Reset" onPress={this.reset} />
               <Button name="Step Forward One Stage" onPress={this.stepForward} />
               <Button name="Evolve!" onPress={this.evolve} />
             </div>
-            // TODO: add max value
             <InputNumber
               name={"Stage"}
               val={stage}
+              max={history.length}
               updateVal={this.updateInputStage}
               displayNumber={false}
             />
