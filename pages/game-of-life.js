@@ -12,11 +12,15 @@ export default class GameOfLIfe extends Component {
       x: 25,
       y: 25,
       stage: 1,
-      data: [{3: "alive"}],
+      data: [{}],
       history: [[]],
       aliveColor: "#357a38",
       deadColor: "#b28704",
     };
+  }
+
+  componentDidMount() {
+    this.randomize();
   }
 
   render() {
@@ -85,7 +89,21 @@ export default class GameOfLIfe extends Component {
   }
 
   randomize = () => {
-
+    const { x, y } = this.state;
+    const data = [];
+    const history = [];
+    for (var i = 1; i <= y; i++) {
+      let row = {};
+      for (var j = 1; j <= x; j++) {
+        let random = Math.floor(Math.random() * 100) + 1;
+        if (random < 50) {
+          row[j] = "alive";
+        }
+      }
+      data.push(row);
+    }
+    history.push(data);
+    this.setState({ stage: 1, data, history });
   }
 
   reset = () => {
