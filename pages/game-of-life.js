@@ -5,6 +5,7 @@ import Controls from "../components/Controls";
 import InputNumber from "../components/InputNumber";
 import Button from "../components/Button";
 import TwoDPlane from "../components/TwoDPlane";
+import ColorPicker from "../components/ColorPicker";
 
 export default class GameOfLife extends Component {
   constructor(props) {
@@ -69,6 +70,10 @@ export default class GameOfLife extends Component {
               <Button name="Pulsar" onPress={this.setStamp.bind(this, "Pulsar")} />
             </div>
           </div>
+          <div style={columnStyle} >
+            <ColorPicker id={1} updateColor={this.updateColor} />
+            <ColorPicker id={2} updateColor={this.updateColor} />
+          </div>
         </Controls>
         <TwoDPlane
           x={x}
@@ -126,6 +131,15 @@ export default class GameOfLife extends Component {
           step: step + 1
         });
       }
+    }
+  }
+
+  updateColor = (target, color) => {
+    if (target === 1) {
+      this.setState({ deadColor: color });
+    }
+    if (target === 2) {
+      this.setState({ aliveColor: color });
     }
   }
 
