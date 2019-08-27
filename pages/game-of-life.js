@@ -89,7 +89,9 @@ export default class GameOfLIfe extends Component {
   }
 
   reset = () => {
-
+    const history = [[{}]];
+    const data = history[0];
+    this.setState({ stage: 1, data, history });
   }
 
   stepForward = () => {
