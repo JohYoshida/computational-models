@@ -19,7 +19,7 @@ export default class GameOfLife extends Component {
       history: [[]],
       aliveColor: "#357a38",
       deadColor: "#b28704",
-      stamp: "Cell",
+      stamp: "Cell"
     };
   }
 
@@ -28,7 +28,16 @@ export default class GameOfLife extends Component {
   }
 
   render() {
-    const { x, y, spawnChance, step, data, history, aliveColor, deadColor } = this.state;
+    const {
+      x,
+      y,
+      spawnChance,
+      step,
+      data,
+      history,
+      aliveColor,
+      deadColor
+    } = this.state;
     return (
       <Layout>
         <Controls>
@@ -66,12 +75,21 @@ export default class GameOfLife extends Component {
               displayNumber={false}
             />
             <div style={rowStyle}>
-              <Button name="Cell" onPress={this.changeStamp.bind(this, "Cell")} />
-              <Button name="Diamond" onPress={this.changeStamp.bind(this, "Diamond")} />
-              <Button name="Pulsar" onPress={this.changeStamp.bind(this, "Pulsar")} />
+              <Button
+                name="Cell"
+                onPress={this.changeStamp.bind(this, "Cell")}
+              />
+              <Button
+                name="Diamond"
+                onPress={this.changeStamp.bind(this, "Diamond")}
+              />
+              <Button
+                name="Pulsar"
+                onPress={this.changeStamp.bind(this, "Pulsar")}
+              />
             </div>
           </div>
-          <div style={columnStyle} >
+          <div style={columnStyle}>
             <ColorPicker id={1} updateColor={this.updateColor} />
             <ColorPicker id={2} updateColor={this.updateColor} />
           </div>
@@ -96,23 +114,23 @@ export default class GameOfLife extends Component {
   updateInputX = evt => {
     const x = Number(evt.target.value);
     this.setState({ x });
-  }
+  };
 
   updateInputY = evt => {
     const y = Number(evt.target.value);
     this.setState({ y });
-  }
+  };
 
   updateInputSpawnChance = evt => {
     const spawnChance = Number(evt.target.value);
     this.setState({ spawnChance });
-  }
+  };
 
   updateInputStep = evt => {
     const { history } = this.state;
     const step = Number(evt.target.value);
     this.setState({ step, data: history[step - 1] });
-  }
+  };
 
   handleKeyPress = evt => {
     const { history, data, step } = this.state;
@@ -136,26 +154,45 @@ export default class GameOfLife extends Component {
         });
       }
     }
-  }
+  };
 
   handleClick = (i, j) => {
-    const { data, history, step } = this.state;
-    data[i][j] ? (data[i][j] = null) : (data[i][j] = "alive");
+    const { data, history, step, stamp, x, y } = this.state;
+    let pattern = makePatternCoords(stamp, i, j, x, y);
+    pattern.forEach(pos => {
+      if (data[pos[0]][pos[1]] === "hover" || !data[pos[0]][pos[1]]) {
+        data[pos[0]][pos[1]] = "alive";
+      } else {
+        delete data[pos[0]][pos[1]];
+      }
+    });
     history[step - 1] = data;
     this.setState({ data, history });
-  }
+  };
 
   handleMouseEnter = (i, j) => {
-    const { data } = this.state;
-    data[i][j] ? (data[i][j] += " hover") : (data[i][j] = "hover");
+    const { data, stamp, x, y } = this.state;
+    let pattern = makePatternCoords(stamp, i, j, x, y);
+    pattern.forEach(pos => {
+      data[pos[0]][pos[1]]
+        ? (data[pos[0]][pos[1]] += " hover")
+        : (data[pos[0]][pos[1]] = "hover");
+    });
     this.setState({ data });
-  }
+  };
 
   handleMouseLeave = (i, j) => {
-    const { data } = this.state;
-    data[i][j] == "hover" ? (delete data[i][j]) : (data[i][j] = (data[i][j].replace(" hover", "")));
+    const { data, stamp, x, y } = this.state;
+    let pattern = makePatternCoords(stamp, i, j, x, y);
+    pattern.forEach(pos => {
+      if (data[pos[0]][pos[1]]) {
+        data[pos[0]][pos[1]] === "hover"
+          ? delete data[pos[0]][pos[1]]
+          : (data[pos[0]][pos[1]] = data[pos[0]][pos[1]].replace(" hover", ""));
+      }
+    });
     this.setState({ data });
-  }
+  };
 
   updateColor = (target, color) => {
     if (target === 1) {
@@ -164,7 +201,7 @@ export default class GameOfLife extends Component {
     if (target === 2) {
       this.setState({ aliveColor: color });
     }
-  }
+  };
 
   randomize = () => {
     const { x, y, spawnChance } = this.state;
@@ -182,7 +219,7 @@ export default class GameOfLife extends Component {
     }
     history.push(data);
     this.setState({ step: 1, data, history });
-  }
+  };
 
   reset = () => {
     const { y } = this.state;
@@ -192,7 +229,7 @@ export default class GameOfLife extends Component {
     }
     const history = [data];
     this.setState({ step: 1, data, history });
-  }
+  };
 
   stepForward = () => {
     const { x, y, data, history } = this.state;
@@ -211,7 +248,7 @@ export default class GameOfLife extends Component {
     }
     history.push(newData);
     this.setState({ data: newData, history, step: history.length });
-  }
+  };
 
   evolve = () => {
     for (var i = 0; i < 10; i++) {
@@ -219,11 +256,11 @@ export default class GameOfLife extends Component {
         this.stepForward();
       }, 1000);
     }
-  }
+  };
 
   changeStamp = type => {
-    this.setState({ stamp: type })
-  }
+    this.setState({ stamp: type });
+  };
 }
 
 const rowStyle = {
@@ -240,12 +277,12 @@ const columnStyle = {
 
 function countNeighbours(data, i, j, x, y) {
   let aliveCount = 0;
-  const above = (i - 1 >= 0) ? i - 1 : y - 1;
-  const below = (i + 1 < y) ? i + 1 : 0;
-  const left = (j - 1 >= 1) ? j - 1 : y;
-  const right = (j + 1 <= y) ? j + 1 : 1
+  const above = i - 1 >= 0 ? i - 1 : y - 1;
+  const below = i + 1 < y ? i + 1 : 0;
+  const left = j - 1 >= 1 ? j - 1 : y;
+  const right = j + 1 <= y ? j + 1 : 1;
   if (!data[above]) {
-    data[above] =  {};
+    data[above] = {};
   } else {
     // check above left
     if (data[above][left] === "alive") aliveCount++;
@@ -304,5 +341,118 @@ function decideFate(isAlive, aliveCount) {
       willLive = true;
     } else willLive = false;
   }
-  return willLive
+  return willLive;
+}
+
+function makePatternCoords(stamp, i, j, x, y) {
+  let pattern = [];
+  if (stamp === "Cell") {
+    pattern.push([i, j]);
+  } else if (stamp === "Diamond") {
+    pattern = makeDiamond(i, j, x, y);
+  } else if (stamp === "Pulsar") {
+    pattern = makePulsar(i, j, x, y);
+  }
+  return pattern;
+}
+
+function makeDiamond(i, j, x, y) {
+  const pattern = [];
+  const above_1 = i - 1 >= 0 ? i - 1 : y - 1;
+  const above_2 = i - 2 >= 0 ? i - 2 : y - Math.abs(i - 2);
+  const below_1 = i + 1 < y ? i + 1 : 0;
+  const below_2 = i + 2 < y ? i + 2 : Math.abs(i + 2 - y);
+  const left_1 = j - 1 >= 1 ? j - 1 : y;
+  const left_2 = j - 2 >= 1 ? j - 2 : y - Math.abs(j - 2);
+  const right_1 = j + 1 <= y ? j + 1 : 1;
+  const right_2 = j + 2 <= y ? j + 2 : Math.abs(j + 2 - y);
+
+  pattern.push([above_2, j]);
+  pattern.push([above_1, left_1]);
+  pattern.push([i, left_2]);
+  pattern.push([below_1, left_1]);
+  pattern.push([below_2, j]);
+  pattern.push([below_1, right_1]);
+  pattern.push([i, right_2]);
+  pattern.push([above_1, right_1]);
+
+  return pattern;
+}
+
+function makePulsar(i, j, x, y) {
+  const pattern = [];
+  const above = {};
+  for (var a = 1; a <= 6; a++) {
+    above[a] = i - a >= 0 ? i - a : y - Math.abs(i - a);
+  }
+  const below = {};
+  for (var a = 1; a <= 6; a++) {
+    below[a] = i + a < y ? i + a : Math.abs(i + a - y);
+  }
+  const left = {};
+  for (var a = 1; a <= 6; a++) {
+    left[a] = j - a >= 1 ? j - a : y - Math.abs(j - a);
+  }
+  const right = {};
+  for (var a = 1; a <= 6; a++) {
+    right[a] = j + a <= y ? j + a : Math.abs(j + a - y);
+  }
+
+  pattern.push([above[6], left[4]]);
+  pattern.push([above[6], left[3]]);
+  pattern.push([above[6], left[2]]);
+  pattern.push([above[6], right[2]]);
+  pattern.push([above[6], right[3]]);
+  pattern.push([above[6], right[4]]);
+
+  pattern.push([above[4], right[6]]);
+  pattern.push([above[3], right[6]]);
+  pattern.push([above[2], right[6]]);
+  pattern.push([below[2], right[6]]);
+  pattern.push([below[3], right[6]]);
+  pattern.push([below[4], right[6]]);
+
+  pattern.push([below[6], left[4]]);
+  pattern.push([below[6], left[3]]);
+  pattern.push([below[6], left[2]]);
+  pattern.push([below[6], right[2]]);
+  pattern.push([below[6], right[3]]);
+  pattern.push([below[6], right[4]]);
+
+  pattern.push([above[4], left[6]]);
+  pattern.push([above[3], left[6]]);
+  pattern.push([above[2], left[6]]);
+  pattern.push([below[2], left[6]]);
+  pattern.push([below[3], left[6]]);
+  pattern.push([below[4], left[6]]);
+
+  pattern.push([above[4], left[1]]);
+  pattern.push([above[3], left[1]]);
+  pattern.push([above[2], left[1]]);
+  pattern.push([below[2], left[1]]);
+  pattern.push([below[3], left[1]]);
+  pattern.push([below[4], left[1]]);
+
+  pattern.push([above[4], right[1]]);
+  pattern.push([above[3], right[1]]);
+  pattern.push([above[2], right[1]]);
+  pattern.push([below[2], right[1]]);
+  pattern.push([below[3], right[1]]);
+  pattern.push([below[4], right[1]]);
+
+  pattern.push([above[1], left[4]]);
+  pattern.push([above[1], left[3]]);
+  pattern.push([above[1], left[2]]);
+  pattern.push([above[1], right[2]]);
+  pattern.push([above[1], right[3]]);
+  pattern.push([above[1], right[4]]);
+
+  pattern.push([below[1], left[4]]);
+  pattern.push([below[1], left[3]]);
+  pattern.push([below[1], left[2]]);
+  pattern.push([below[1], right[2]]);
+  pattern.push([below[1], right[3]]);
+  pattern.push([below[1], right[4]]);
+
+  return pattern;
 }
