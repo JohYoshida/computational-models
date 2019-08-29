@@ -170,6 +170,7 @@ export default class CellularAutomata extends Component {
   };
 }
 
+// Styles
 const rowStyle = {
   display: "flex",
   flexDirection: "row"
@@ -182,6 +183,7 @@ const columnStyle = {
   margin: 10
 };
 
+// Functions
 function makeBinaryRule(rule) {
   let binaryRule = rule.toString(2);
   while (binaryRule.length < 8) {
