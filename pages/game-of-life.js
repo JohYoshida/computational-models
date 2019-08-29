@@ -15,6 +15,7 @@ export default class GameOfLife extends Component {
       y: 25,
       spawnChance: 50,
       step: 1,
+      evolveSteps: 10,
       data: [{}],
       history: [[]],
       aliveColor: "#357a38",
@@ -33,6 +34,7 @@ export default class GameOfLife extends Component {
       y,
       spawnChance,
       step,
+      evolveSteps,
       data,
       history,
       aliveColor,
@@ -65,7 +67,14 @@ export default class GameOfLife extends Component {
               <Button name="Randomize" onPress={this.randomize} />
               <Button name="Reset" onPress={this.reset} />
               <Button name="Step Forward" onPress={this.stepForward} />
-              <Button name="Evolve!" onPress={this.evolve} />
+              <Button name={`Evolve ${evolveSteps} Steps`} onPress={this.evolve} />
+              <InputNumber
+                name={""}
+                val={evolveSteps}
+                updateVal={this.updateInputEvolveSteps}
+                displayRange={false}
+                displayValue={false}
+              />
             </div>
             <InputNumber
               name={"Step"}
@@ -130,6 +139,11 @@ export default class GameOfLife extends Component {
     const { history } = this.state;
     const step = Number(evt.target.value);
     this.setState({ step, data: history[step - 1] });
+  };
+
+  updateInputEvolveSteps = evt => {
+    const evolveSteps = Number(evt.target.value);
+    this.setState({ evolveSteps });
   };
 
   handleKeyPress = evt => {
@@ -251,10 +265,11 @@ export default class GameOfLife extends Component {
   };
 
   evolve = () => {
-    for (var i = 0; i < 10; i++) {
+    const { evolveSteps } = this.state;
+    for (var i = 0; i < evolveSteps; i++) {
       setTimeout(() => {
         this.stepForward();
-      }, 1000);
+      }, 100);
     }
   };
 
