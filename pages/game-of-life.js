@@ -11,8 +11,8 @@ export default class GameOfLife extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      x: 25,
-      y: 25,
+      x: 50,
+      y: 50,
       spawnChance: 50,
       step: 1,
       evolveSteps: 10,
