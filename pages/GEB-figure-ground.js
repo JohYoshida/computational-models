@@ -132,33 +132,34 @@ export default class GEBFigureGround extends Component {
   organizeData = () => {
     const { display, x, y } = this.state;
     const data = [{}];
+    let lvl;
     if (display === 1) {
-      const { lvl1 } = this.state;
-      lvl1.forEach(item => {
-        let quotient = Math.floor(item / x);
-        let remainder = (item % x === 0) ? x : item % x;
-        console.log(x, item, quotient, remainder);
-        if (data[quotient]) {
-          data[quotient][remainder] = "alive"
+      lvl = this.state.lvl1;
+    } else if(display === 2) {
+      lvl = this.state.lvl2;
+    } else if(display === 3) {
+      lvl = this.state.lvl3;
+    }
+    lvl.forEach(item => {
+      let quotient = Math.floor(item / x);
+      let remainder = (item % x === 0) ? x : item % x;
+      if (data[quotient]) {
+        if (item !== 0) data[quotient][remainder] = "alive"
+      } else {
+        let diff = quotient - data.length;
+        for (var i = 0; i < diff; i++) {
+          data.push({});
+        }
+        if (remainder === x) {
+          data[quotient - 1][remainder] = "alive";
         } else {
-          let diff = quotient - data.length;
-          console.log(diff);
-          for (var i = 0; i < diff; i++) {
-            data.push({});
-            console.log("push");
-          }
           let row = {};
           row[remainder] = "alive";
           data.push(row);
         }
-      });
 
-
-    } else if (display === "lvl2") {
-
-    } else if (display === "lvl3") {
-
-    }
+      }
+    });
     this.setState({ data });
   }
 }
