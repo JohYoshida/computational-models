@@ -30,7 +30,7 @@ export default class GEBFigureGround extends Component {
   }
 
   render() {
-    const { data, x, y, firstColor, secondColor } = this.state;
+    const { data, x, y, display, firstColor, secondColor } = this.state;
     return (
       <Layout>
         <Controls>
@@ -49,6 +49,15 @@ export default class GEBFigureGround extends Component {
               updateVal={this.updateInputY}
               min={1}
               max={256}
+              displayValue={false}
+            />
+            <InputNumber
+              name="Display Level"
+              val={display}
+              updateVal={this.updateInputDisplay}
+              min={1}
+              max={3}
+              displayRange={false}
               displayValue={false}
             />
           </div>
