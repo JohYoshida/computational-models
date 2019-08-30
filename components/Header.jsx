@@ -21,14 +21,14 @@ export default function Header() {
       <Link href="/">
         <a style={linkStyle}>Home</a>
       </Link>
-      <Link href="/game-of-life">
+      <Link href="/gameoflife">
         <a style={linkStyle}>Game Of Life</a>
       </Link>
-      <Link href="/cellular-automata">
+      <Link href="/cellularautomata">
         <a style={linkStyle}>Cellular Automata</a>
       </Link>
-      <Link href="/GEB-figure-ground">
-        <a style={linkStyle}>Godel Escher Bach: Figure/Ground</a>
+      <Link href="/strangeloopexplorer">
+        <a style={linkStyle}>GEB Strange Loop Explorer</a>
       </Link>
     </div>
   );
