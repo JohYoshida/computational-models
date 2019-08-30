@@ -67,7 +67,10 @@ export default class GameOfLife extends Component {
               <Button name="Randomize" onPress={this.randomize} />
               <Button name="Reset" onPress={this.reset} />
               <Button name="Step Forward" onPress={this.stepForward} />
-              <Button name={`Evolve ${evolveSteps} Steps`} onPress={this.evolve} />
+              <Button
+                name={`Evolve ${evolveSteps} Steps`}
+                onPress={this.evolve}
+              />
               <InputNumber
                 name={""}
                 val={evolveSteps}

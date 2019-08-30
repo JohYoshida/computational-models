@@ -20,7 +20,7 @@ export default class GEBFigureGround extends Component {
       lvl2: [2],
       lvl3: [1],
       index: 0,
-      display: 1,
+      display: 1
     };
   }
 
@@ -101,7 +101,6 @@ export default class GEBFigureGround extends Component {
     });
   };
 
-
   updateColor = (target, color) => {
     if (target === 1) {
       this.setState({ firstColor: color });
@@ -114,15 +113,15 @@ export default class GEBFigureGround extends Component {
   extend = () => {
     const { lvl1, lvl2, lvl3, x, y } = this.state;
     const max = x * y;
-    
+
     for (var index = this.state.index; lvl1[index] <= max; index++) {
       let next2, next3;
       lvl1.push(lvl2[lvl2.length - 1] - 1);
       for (var count = 1; count <= lvl3[index]; count++) {
         let last3 = lvl3.length - 1;
-        next3 = (count === lvl3[index]) ? (lvl3[last3] + 2) : (lvl3[last3] + 1);
+        next3 = count === lvl3[index] ? lvl3[last3] + 2 : lvl3[last3] + 1;
         lvl3.push(next3);
-        next2 = (count === lvl3[index]) ? lvl2[last3] + 2 : lvl2[last3] + 1;
+        next2 = count === lvl3[index] ? lvl2[last3] + 2 : lvl2[last3] + 1;
         lvl2.push(next2);
       }
     }
@@ -135,16 +134,16 @@ export default class GEBFigureGround extends Component {
     let lvl;
     if (display === 1) {
       lvl = this.state.lvl1;
-    } else if(display === 2) {
+    } else if (display === 2) {
       lvl = this.state.lvl2;
-    } else if(display === 3) {
+    } else if (display === 3) {
       lvl = this.state.lvl3;
     }
     lvl.forEach(item => {
       let quotient = Math.floor(item / x);
-      let remainder = (item % x === 0) ? x : item % x;
+      let remainder = item % x === 0 ? x : item % x;
       if (data[quotient]) {
-        if (item !== 0) data[quotient][remainder] = "alive"
+        if (item !== 0) data[quotient][remainder] = "alive";
       } else {
         let diff = quotient - data.length;
         for (var i = 0; i < diff; i++) {
@@ -157,11 +156,10 @@ export default class GEBFigureGround extends Component {
           row[remainder] = "alive";
           data.push(row);
         }
-
       }
     });
     this.setState({ data });
-  }
+  };
 }
 
 // Styles
