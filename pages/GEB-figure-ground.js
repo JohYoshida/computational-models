@@ -20,11 +20,13 @@ export default class GEBFigureGround extends Component {
       lvl2: [2],
       lvl3: [1],
       index: 0,
+      display: 1,
     };
   }
 
   componentDidMount() {
     this.extend();
+    this.organizeData();
   }
 
   render() {
@@ -69,15 +71,27 @@ export default class GEBFigureGround extends Component {
 
   updateInputX = evt => {
     const x = Number(evt.target.value);
-    this.setState({ x });
-    this.extend();
+    this.setState({ x }, () => {
+      this.extend();
+      this.organizeData();
+    });
   };
 
   updateInputY = evt => {
     const y = Number(evt.target.value);
-    this.setState({ y });
-    this.extend();
+    this.setState({ y }, () => {
+      this.extend();
+      this.organizeData();
+    });
   };
+
+  updateInputDisplay = evt => {
+    const display = Number(evt.target.value);
+    this.setState({ display }, () => {
+      this.organizeData();
+    });
+  };
+
 
   updateColor = (target, color) => {
     if (target === 1) {
@@ -105,6 +119,39 @@ export default class GEBFigureGround extends Component {
     }
     this.setState({ lvl1, lvl2, lvl3, index });
   };
+
+  organizeData = () => {
+    const { display, x, y } = this.state;
+    const data = [{}];
+    if (display === 1) {
+      const { lvl1 } = this.state;
+      lvl1.forEach(item => {
+        let quotient = Math.floor(item / x);
+        let remainder = (item % x === 0) ? x : item % x;
+        console.log(x, item, quotient, remainder);
+        if (data[quotient]) {
+          data[quotient][remainder] = "alive"
+        } else {
+          let diff = quotient - data.length;
+          console.log(diff);
+          for (var i = 0; i < diff; i++) {
+            data.push({});
+            console.log("push");
+          }
+          let row = {};
+          row[remainder] = "alive";
+          data.push(row);
+        }
+      });
+
+
+    } else if (display === "lvl2") {
+
+    } else if (display === "lvl3") {
+
+    }
+    this.setState({ data });
+  }
 }
 
 // Styles
