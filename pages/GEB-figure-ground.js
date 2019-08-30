@@ -16,11 +16,15 @@ export default class GEBFigureGround extends Component {
       data: [{}],
       firstColor: "#b28704",
       secondColor: "#357a38",
-      figure: [1],
-      ground: [2, 4],
-      groundSize: 2,
-      current: 0,
+      lvl1: [0],
+      lvl2: [2],
+      lvl3: [1],
+      index: 0,
     };
+  }
+
+  componentDidMount() {
+    this.extend();
   }
 
   render() {
@@ -66,11 +70,13 @@ export default class GEBFigureGround extends Component {
   updateInputX = evt => {
     const x = Number(evt.target.value);
     this.setState({ x });
+    this.extend();
   };
 
   updateInputY = evt => {
     const y = Number(evt.target.value);
     this.setState({ y });
+    this.extend();
   };
 
   updateColor = (target, color) => {
@@ -82,6 +88,23 @@ export default class GEBFigureGround extends Component {
     }
   };
 
+  extend = () => {
+    const { lvl1, lvl2, lvl3, x, y } = this.state;
+    const max = x * y;
+    
+    for (var index = this.state.index; lvl1[index] <= max; index++) {
+      let next2, next3;
+      lvl1.push(lvl2[lvl2.length - 1] - 1);
+      for (var count = 1; count <= lvl3[index]; count++) {
+        let last3 = lvl3.length - 1;
+        next3 = (count === lvl3[index]) ? (lvl3[last3] + 2) : (lvl3[last3] + 1);
+        lvl3.push(next3);
+        next2 = (count === lvl3[index]) ? lvl2[last3] + 2 : lvl2[last3] + 1;
+        lvl2.push(next2);
+      }
+    }
+    this.setState({ lvl1, lvl2, lvl3, index });
+  };
 }
 
 // Styles
