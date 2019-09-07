@@ -87,7 +87,7 @@ export default class GeneticGame extends Component {
       id,
       context: {
         round: 0,
-        performanceScore: 0,
+        score: 0,
         current: initial
       },
       initial,
@@ -147,11 +147,11 @@ export default class GeneticGame extends Component {
     if (Player1.id === Player2.id) {
       // When playing against self, payoff is averaged
       let payoff = (payoff1 + payoff2) / 2;
-      Player1.context.performanceScore += payoff;
-      Player2.context.performanceScore += payoff;
+      Player1.context.score += payoff;
+      Player2.context.score += payoff;
     }
-    Player1.context.performanceScore += payoff1;
-    Player2.context.performanceScore += payoff2;
+    Player1.context.score += payoff1;
+    Player2.context.score += payoff2;
     // Increment round count
     Player1.context.round += 1;
     Player2.context.round += 1;
