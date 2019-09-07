@@ -9,6 +9,7 @@ export default class GeneticGame extends Component {
       maxStates: 16,
       rounds: 15,
       genePool: [],
+      fitnessPool: []
     };
   }
 
@@ -172,5 +173,33 @@ export default class GeneticGame extends Component {
     }
     return players;
   };
+
+  /**
+   * Measure fitness of each gene sequence.
+   * Every pair of sequences is translated into finite state machines, which are
+   * pitted against each other in Repeated Prisoners' Dilemma. Accumulated score
+   * is added to measure of sequence fitness.
+   * @return {fitnessPool} Alters state
+   */
+  measureFitness() {
+    const { genePool } = this.state;
+    const fitnessPool = [];
+    // Prepare fitness pool
+    for (var i = 0; i < genePool.length; i++) {
+      fitnessPool.push(0);
+    }
+    // Play Repeated Prisoners' Dilemma with every pair of sequences
+    for (var i = 0; i < genePool.length; i++) {
+      for (var j = 0; j < genePool.length; j++) {
+        let players = this.playGame(i, j);
+        // Add scores to fitness pool
+        fitnessPool[i] += players[0].context.score;
+        if (i !== j) {
+          fitnessPool[j] += players[1].context.score;
+        }
+      }
+    }
+    this.setState({ fitnessPool });
+  }
 
 }
