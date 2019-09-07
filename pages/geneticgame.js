@@ -5,7 +5,9 @@ export default class GeneticGame extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      poolSize: 30,
       maxStates: 16,
+      genePool: [],
     };
   }
 
@@ -32,5 +34,20 @@ export default class GeneticGame extends Component {
       sequence += gene;
     }
     return sequence;
+  }
+
+  /**
+   * Generates an array of gene sequences and saves it to the state
+   * @return { genePool } Alters state
+   */
+  generateGenePool() {
+    const { poolSize } = this.state;
+    const genePool = [];
+    // Fill gene pool
+    for (var i = 0; i < poolSize; i++) {
+      let sequence = this.generateGeneSequence();
+      genePool.push(sequence);
+    }
+    this.setState({ genePool });
   }
 }
