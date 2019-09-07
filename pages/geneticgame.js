@@ -57,7 +57,7 @@ export default class GeneticGame extends Component {
    * @param  {Number} id       Sequence's index in gene pool.
    * @return {Object}          Finite state machine Agent.
    */
-  makeAgent = id => {
+  makePlayers = id => {
     const { genePool } = this.state;
     const sequence = genePool[id];
     // Measure the binary digits required to designate each transition function
