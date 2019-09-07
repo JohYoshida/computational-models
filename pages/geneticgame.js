@@ -85,7 +85,7 @@ export default class GeneticGame extends Component {
     return {
       id,
       context: {
-        elapsed: 0,
+        round: 0,
         performanceScore: 0,
         current: initial
       },
