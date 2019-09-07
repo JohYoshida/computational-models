@@ -202,6 +202,7 @@ export default class GeneticGame extends Component {
       }
     }
     this.setState({ fitnessPool });
+    return new Promise((resolve, reject) => resolve());
   }
 
   /**
