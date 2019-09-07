@@ -7,6 +7,7 @@ export default class GeneticGame extends Component {
     this.state = {
       poolSize: 30,
       maxStates: 16,
+      rounds: 15,
       genePool: [],
     };
   }
@@ -154,6 +155,21 @@ export default class GeneticGame extends Component {
     // Increment round count
     Player1.context.round += 1;
     Player2.context.round += 1;
+    return players;
+  };
+
+  /**
+   * Pits two players against each other for Repeated Prisoners's Dilemma
+   * @param  {Number} one Index of player 1.
+   * @param  {Number} two Index of player 2.
+   * @return {Array}      Two players with performance scores for this game
+   */
+  playGame = (one, two) => {
+    let players = [this.makePlayers(one), this.makePlayers(two)];
+    // Play each round
+    for (var i = 0; i < this.state.rounds; i++) {
+      players = this.performPrisonersDilemma(players);
+    }
     return players;
   };
 
