@@ -57,7 +57,7 @@ export default class GeneticGame extends Component {
    * @param  {Number} id       Sequence's index in gene pool.
    * @return {Object}          Finite state machine Agent.
    */
-  makeAgent = (id) => {
+  makeAgent = id => {
     const { genePool } = this.state;
     const sequence = genePool[id];
     // Measure the binary digits required to designate each transition function
@@ -68,13 +68,16 @@ export default class GeneticGame extends Component {
     // Fill states
     for (var i = 0; i < this.state.maxStates; i++) {
       // Calculate starting index of state packet on sequence
-      let index = digits + i * (1 + (2 * digits));
+      let index = digits + i * (1 + 2 * digits);
       // Translate state data from packet
       let state = {
         move: parseInt(sequence.slice(index, index + 1)),
         cooperative: parseInt(sequence.slice(index + 1, index + 5), 2),
         cooperative: parseInt(sequence.slice(index + 1, index + 1 + digits), 2),
-        defective: parseInt(sequence.slice(index + 5, index + 1 + (2 * digits)), 2)
+        defective: parseInt(
+          sequence.slice(index + 5, index + 1 + 2 * digits),
+          2
+        )
       };
       states.push(state);
     }
