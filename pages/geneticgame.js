@@ -94,4 +94,67 @@ export default class GeneticGame extends Component {
     };
   };
 
+  /**
+   * Pits two players in a round of Prisoners' Dilemma
+   * @param  {Array} players Two players
+   * @return {Array}         Two players with payoffs for this round
+   */
+  performPrisonersDilemma = players => {
+    // Define players
+    const Player1 = players[0];
+    const Player2 = players[1];
+    // Define current states and moves
+    let currentState1 = Player1.context.current;
+    let currentState2 = Player2.context.current;
+    let move1 = Player1.states[currentState1].move;
+    let move2 = Player2.states[currentState2].move;
+    // Award payoffs and advance states
+    let payoff1 = 0,
+      payoff2 = 0;
+    if (move1 === 0) {
+      // Player 1 cooperates
+      if (move2 === 0) {
+        // Player 2 cooperates
+        payoff1 = 3;
+        Player1.context.current = Player1.states[currentState1].cooperative;
+        payoff2 = 3;
+        Player2.context.current = Player2.states[currentState2].cooperative;
+      } else if (move2 === 1) {
+        // Player 2 defects
+        payoff1 = 0;
+        Player1.context.current = Player1.states[currentState1].defective;
+        payoff2 = 5;
+        Player2.context.current = Player2.states[currentState2].cooperative;
+      }
+    } else if (move1 === 1) {
+      // Player 1 defects
+      if (move2 === 0) {
+        // Player 2 cooperates
+        payoff1 = 5;
+        Player1.context.current = Player1.states[currentState1].cooperative;
+        payoff2 = 0;
+        Player2.context.current = Player2.states[currentState2].defective;
+      } else if (move2 === 1) {
+        // Player 2 defects
+        payoff1 = 1;
+        Player1.context.current = Player1.states[currentState1].defective;
+        payoff2 = 1;
+        Player2.context.current = Player2.states[currentState2].defective;
+      }
+    }
+    // Add payoffs to Player contexts
+    if (Player1.id === Player2.id) {
+      // When playing against self, payoff is averaged
+      let payoff = (payoff1 + payoff2) / 2;
+      Player1.context.performanceScore += payoff;
+      Player2.context.performanceScore += payoff;
+    }
+    Player1.context.performanceScore += payoff1;
+    Player2.context.performanceScore += payoff2;
+    // Increment round count
+    Player1.context.round += 1;
+    Player2.context.round += 1;
+    return players;
+  };
+
 }
