@@ -202,4 +202,36 @@ export default class GeneticGame extends Component {
     this.setState({ fitnessPool });
   }
 
+  /**
+   * Orders gene and fitness pools by associated fitness
+   * @return {Object} genePool: Ordered Array of gene sequences
+   *                  fitnessPool: Ordered array of fitness scores
+   */
+  orderGenePool() {
+    const { genePool, fitnessPool, poolSize } = this.state;
+    const sortedGenePool = [],
+      sortedFitnessPool = [];
+    // Sort pools by highest fitness
+    while (sortedGenePool.length < poolSize) {
+      // Initialize highest fitness and its index
+      let highest = fitnessPool[0];
+      let index = 0;
+      // Check each sequence for higher fitness
+      for (var i = 1; i < genePool.length; i++) {
+        if (fitnessPool[i] > highest) {
+          // Record fitness and index
+          highest = fitnessPool[i];
+          index = i;
+        }
+      }
+      // Splice highest performing sequence and move to sorted pool
+      let next = genePool.splice(index, 1);
+      sortedGenePool.push(next[0]);
+      // Do the same for the fitness score
+      next = fitnessPool.splice(index, 1);
+      sortedFitnessPool.push(next[0]);
+    }
+    return { genePool: sortedGenePool, fitnessPool: sortedFitnessPool };
+  }
+
 }
