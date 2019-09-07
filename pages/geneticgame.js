@@ -9,6 +9,7 @@ export default class GeneticGame extends Component {
       maxStates: 16,
       rounds: 15,
       mutationChance: 0.5,
+      survivalChance: 80,
       genePool: [],
       fitnessPool: []
     };
@@ -274,5 +275,33 @@ export default class GeneticGame extends Component {
     }
     return sequence;
   };
+
+  /**
+   * Applies selective pressures to genePool.
+   * Culls lowest performance genes and reproduces highest performance genes,
+   * with crossover and mutation.
+   * @return { genePool } Alters state
+   */
+  nextGeneration() {
+    const { survivalChance, poolSize } = this.state;
+    const { genePool, fitnessPool } = this.orderGenePool();
+    let count = 0;
+    // Cull low performance gene sequences
+    for (var i = 0; i < genePool.length; i++) {
+      // Roll for survival
+      let random = Math.floor(Math.random() * 100);
+      if (random > survivalChance) {
+        // Remove from gene pool
+        genePool.pop();
+        count++;
+      }
+    }
+    // Reproduce high performance genes to fill pool
+    for (var i = 0; i < count; i++) {
+      let sequence = this.reproduce(genePool);
+      genePool.push(sequence);
+    }
+    this.setState({ genePool, fitnessPool });
+  }
 
 }
