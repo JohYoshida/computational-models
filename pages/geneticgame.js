@@ -20,15 +20,16 @@ export default class GeneticGame extends Component {
   }
 
   /**
-   * Generates a gene sequence of zeroes and ones. Length depends on maxStates
-   * @return { String } Gene sequence
+   * Generates a gene sequence of zeroes and ones. Length depends on maxStates.
+   * @return {String} Gene sequence.
    */
   generateGeneSequence() {
     let sequence = "";
     // Measure the binary digits required to designate each state transition;
     const digits = (this.state.maxStates - 1).toString(2).length;
     // Measure the length of the gene sequence
-    const length = digits + this.state.maxStates * (1 + (2 * digits));
+    const length = digits + this.state.maxStates * (1 + 2 * digits);
+    console.log(length);
     for (var i = 0; i < length; i++) {
       let gene = Math.floor(Math.random() * 2);
       sequence += gene;
@@ -37,8 +38,8 @@ export default class GeneticGame extends Component {
   }
 
   /**
-   * Generates an array of gene sequences and saves it to the state
-   * @return { genePool } Alters state
+   * Generates an array of gene sequences and saves it to the state.
+   * @return {genePool} Alters state.
    */
   generateGenePool() {
     const { poolSize } = this.state;
