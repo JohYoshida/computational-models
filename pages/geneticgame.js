@@ -8,6 +8,7 @@ export default class GeneticGame extends Component {
       poolSize: 30,
       maxStates: 16,
       rounds: 15,
+      mutationChance: 0.5,
       genePool: [],
       fitnessPool: []
     };
@@ -233,5 +234,45 @@ export default class GeneticGame extends Component {
     }
     return { genePool: sortedGenePool, fitnessPool: sortedFitnessPool };
   }
+
+  /**
+   * Reproduces gene sequence, taking parents from existing pool
+   * Two parent sequences are mated via crossover and mutation.
+   * TODO: bias parent choice by performance
+   * @param  {Array} genePool Array of gene sequences
+   * @return {String}         Gene sequence
+   */
+  reproduce = genePool => {
+    // Count sequences in pool
+    const poolSize = genePool.length;
+    // Measure length of gene sequence
+    const sequenceLength = genePool[0].length;
+    // Generate parent indexes and crossover point
+    const one = Math.floor(Math.random() * poolSize);
+    const two = Math.floor(Math.random() * poolSize);
+    const c = Math.floor(Math.random() * sequenceLength);
+    // Crossover two parent sequences
+    let sequence =
+      genePool[one].slice(0, c) + genePool[two].slice(c, sequenceLength);
+    // Mutate child sequence
+    const { mutationChance } = this.state;
+    // Calculate maximum number for mutation roll
+    const max = 100 / mutationChance;
+    for (var i = 0; i < sequenceLength; i++) {
+      // Roll for mutation
+      let num = Math.floor(Math.random() * max) + 1;
+      // Critical roll
+      if (num === max) {
+        // Slice around bit to be mutated
+        let front = sequence.slice(0, i);
+        let back = sequence.slice(i + 1);
+        // Mutate bit
+        let mutation = sequence[i] === "1" ? "0" : "1";
+        // Stitch gene sequence back together
+        sequence = front + mutation + back;
+      }
+    }
+    return sequence;
+  };
 
 }
