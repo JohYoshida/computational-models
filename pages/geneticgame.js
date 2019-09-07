@@ -66,7 +66,7 @@ export default class GeneticGame extends Component {
     const sequence = genePool[id];
     // Measure the binary digits required to designate each transition function
     const digits = (this.state.maxStates - 1).toString(2).length;
-    // Transliate initial state from sequence
+    // Translate initial state from sequence
     const initial = parseInt(sequence.slice(0, digits), 2);
     const states = [];
     // Fill states
