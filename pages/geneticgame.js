@@ -7,7 +7,7 @@ export default class GeneticGame extends Component {
     this.state = {
       poolSize: 30,
       maxStates: 16,
-      rounds: 15,
+      rounds: 150,
       mutationChance: 0.5,
       survivalChance: 80,
       genePool: [],
