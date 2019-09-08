@@ -181,7 +181,7 @@ export default class GeneticGame extends Component {
    * Every pair of sequences is translated into finite state machines, which are
    * pitted against each other in Repeated Prisoners' Dilemma. Accumulated score
    * is added to measure of sequence fitness.
-   * @return {fitnessPool} Alters state
+   * @return {Promise} No action on resolve
    */
   measureFitness() {
     const { genePool } = this.state;
