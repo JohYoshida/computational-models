@@ -1,5 +1,5 @@
 export default function Cell(props) {
-  let { status, size, color, click, mouseEnter, mouseLeave } = props;
+  let { status, size, color, click, mouseEnter, mouseLeave, text } = props;
 
   // Set size
   !size ? (size = 5) : (size = size);
@@ -11,39 +11,51 @@ export default function Cell(props) {
   !mouseLeave ? (mouseLeave = null) : (mouseLeave = mouseLeave);
 
   // Configure styles
-  let rgb = color ? hexToRgb(color) : hexToRgb("#BDBDBD");
-  const aliveCellStyle = {
-    backgroundColor: color ? color : "#357a38",
-    height: size,
-    width: size
-  };
-  const deadCellStyle = {
-    backgroundColor: color ? color : "#b28704",
-    height: size,
-    width: size
-  };
-  const hoverCellStyle = {
-    backgroundColor: `rgba(${rgb["r"]}, ${rgb["g"]}, ${rgb["b"]}, 0.5)`,
-    height: size,
-    width: size
-  };
-  const customCellStyle = {
-    backgroundColor: color,
-    height: size,
-    width: size
-  };
-
-  // Select style
   let style = {};
+  // Binary color styles
   if (status === "alive") {
-    style = aliveCellStyle;
+    style = {
+      backgroundColor: color ? color : "#357a38",
+      height: size,
+      width: size
+    };
   } else if (status === "dead") {
-    style = deadCellStyle;
+    style = {
+      backgroundColor: color ? color : "#b28704",
+      height: size,
+      width: size
+    };
   } else if (status === "hover" || status === "alive hover") {
-    style = hoverCellStyle;
+    let rgb = color ? hexToRgb(color) : hexToRgb("#BDBDBD");
+    style = {
+      backgroundColor: `rgba(${rgb["r"]}, ${rgb["g"]}, ${rgb["b"]}, 0.5)`,
+      height: size,
+      width: size
+    };
   }
+  // Genetics styles
+  if (status === "gene") {
+    style = {
+      backgroundColor: color,
+      height: size * 3,
+      width: size,
+    };
+  } else if (status === "geneKey") {
+    style = {
+      backgroundColor: color,
+      height: size * 3,
+      width: size * 3,
+      fontSize: size * 2,
+      textAlign: "center"
+    };
+  }
+  // Misc styles
   if (!status && color) {
-    style = customCellStyle;
+    style = {
+      backgroundColor: color,
+      height: size,
+      width: size
+    };
   }
 
   return (
@@ -52,7 +64,7 @@ export default function Cell(props) {
       onClick={click}
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
-    />
+    >{text}</div>
   );
 }
 
