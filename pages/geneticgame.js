@@ -12,7 +12,7 @@ export default class GeneticGame extends Component {
       survivalChance: 80,
       genePool: [],
       fitnessPool: [],
-      difference: [],
+      differencePool: [],
     };
   }
 
@@ -215,7 +215,7 @@ export default class GeneticGame extends Component {
     const { genePool, fitnessPool, poolSize } = this.state;
     const sortedGenePool = [],
       sortedFitnessPool = [],
-      difference = [];
+      differencePool = [];
     // Sort pools by highest fitness
     let count = 0;
     while (sortedGenePool.length < poolSize) {
@@ -237,10 +237,10 @@ export default class GeneticGame extends Component {
       next = fitnessPool.splice(index, 1);
       sortedFitnessPool.push(next[0]);
       // Calculate difference in fitness rank
-      difference.push(index - difference.length + count);
+      differencePool.push(index - differencePool.length + count);
       count++
     }
-    return { genePool: sortedGenePool, fitnessPool: sortedFitnessPool, difference };
+    return { genePool: sortedGenePool, fitnessPool: sortedFitnessPool, differencePool };
   }
 
   /**
@@ -289,9 +289,9 @@ export default class GeneticGame extends Component {
    * with crossover and mutation.
    * @return { genePool } Alters state
    */
-  nextGeneration() {
+  applySelectivePressures() {
     const { survivalChance, poolSize } = this.state;
-    const { genePool, fitnessPool, difference } = this.orderGenePool();
+    const { genePool, fitnessPool, differencePool } = this.orderGenePool();
     let count = 0;
     // Cull low performance gene sequences
     for (var i = 0; i < genePool.length; i++) {
@@ -308,7 +308,7 @@ export default class GeneticGame extends Component {
       let sequence = this.reproduce(genePool);
       genePool.push(sequence);
     }
-    this.setState({ genePool, fitnessPool, difference });
+    this.setState({ genePool, fitnessPool, differencePool });
   }
 
 }
