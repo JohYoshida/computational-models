@@ -18,7 +18,7 @@ export default class GeneticGame extends Component {
       genePool: [],
       fitnessPool: [],
       rankPool: [],
-      generation: 0,
+      generation: 0
     };
   }
 
@@ -31,10 +31,22 @@ export default class GeneticGame extends Component {
     return (
       <Layout>
         <Controls>
-          <Button name="Generate Gene Pool" onPress={this.generateGenePool.bind(this)} />
-          <Button name="Measure Fitness of Population" onPress={this.measureFitness.bind(this)} />
-          <Button name="Apply Selective Pressures" onPress={this.applySelectivePressures.bind(this)} />
-          <Button name="Next Generation" onPress={this.nextGeneration.bind(this)} />
+          <Button
+            name="Generate Gene Pool"
+            onPress={this.generateGenePool.bind(this)}
+          />
+          <Button
+            name="Measure Fitness of Population"
+            onPress={this.measureFitness.bind(this)}
+          />
+          <Button
+            name="Apply Selective Pressures"
+            onPress={this.applySelectivePressures.bind(this)}
+          />
+          <Button
+            name="Next Generation"
+            onPress={this.nextGeneration.bind(this)}
+          />
           <Button name="Next 50 Generations" onPress={this.evolve.bind(this)} />
         </Controls>
         Generation {this.state.generation}
@@ -262,9 +274,13 @@ export default class GeneticGame extends Component {
       sortedFitnessPool.push(next[0]);
       // Calculate difference in fitness rank
       rankPool.push(index - rankPool.length + count);
-      count++
+      count++;
     }
-    return { genePool: sortedGenePool, fitnessPool: sortedFitnessPool, rankPool };
+    return {
+      genePool: sortedGenePool,
+      fitnessPool: sortedFitnessPool,
+      rankPool
+    };
   }
 
   /**
@@ -343,7 +359,7 @@ export default class GeneticGame extends Component {
     this.measureFitness().then(() => {
       this.applySelectivePressures();
       let { generation } = this.state;
-      generation++
+      generation++;
       this.setState({ generation });
     });
   }

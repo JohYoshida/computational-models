@@ -38,7 +38,7 @@ export default function Cell(props) {
     style = {
       backgroundColor: color,
       height: size * 3,
-      width: size,
+      width: size
     };
   } else if (status === "geneKey") {
     style = {
@@ -64,7 +64,9 @@ export default function Cell(props) {
       onClick={click}
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
-    >{text}</div>
+    >
+      {text}
+    </div>
   );
 }
 

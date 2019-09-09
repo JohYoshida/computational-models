@@ -1,24 +1,26 @@
 import GeneSequence from "./GeneSequence";
 
 export default function GenePool(props) {
-  const { genePool, fitnessPool, rankPool, maxStates} = props;
+  const { genePool, fitnessPool, rankPool, maxStates } = props;
 
   // Initialize columns
   const KeyColumn = [
-    <div key={"Sequence"} style={text}>Sequence</div>
+    <div key={"Sequence"} style={text}>
+      Sequence
+    </div>
   ];
   const GenePoolColumn = [
-    <GeneSequence
-      key="key"
-      sequence={"key"}
-      maxStates={maxStates}
-    />
+    <GeneSequence key="key" sequence={"key"} maxStates={maxStates} />
   ];
   const ScoresColumn = [
-    <div key={"Fitness"} style={text}>Fitness</div>
+    <div key={"Fitness"} style={text}>
+      Fitness
+    </div>
   ];
   const DifferenceColumn = [
-    <div key={"Rank"} style={text}>Rank</div>,
+    <div key={"Rank"} style={text}>
+      Rank
+    </div>
   ];
 
   // Fill columns
@@ -29,40 +31,28 @@ export default function GenePool(props) {
       </div>
     );
     GenePoolColumn.push(
-        <GeneSequence
-          key={index}
-          sequence={sequence}
-          maxStates={maxStates}
-        />
+      <GeneSequence key={index} sequence={sequence} maxStates={maxStates} />
     );
     // Make sure rank numbers are preceded by their sign
-    let diff = rankPool[index] >= 0 ? `+${rankPool[index]}` : rankPool[index]
+    let diff = rankPool[index] >= 0 ? `+${rankPool[index]}` : rankPool[index];
     DifferenceColumn.push(
-        <div key={index} style={text}>
-          {diff}
-        </div>
+      <div key={index} style={text}>
+        {diff}
+      </div>
     );
     ScoresColumn.push(
-        <div key={index} style={text}>
-          {fitnessPool[index]}
-        </div>
+      <div key={index} style={text}>
+        {fitnessPool[index]}
+      </div>
     );
   });
 
   return (
     <div style={GenePoolStyle}>
-      <div style={column}>
-        {KeyColumn}
-      </div>
-      <div style={column}>
-        {GenePoolColumn}
-      </div>
-      <div style={column}>
-        {ScoresColumn}
-      </div>
-      <div style={column}>
-        {DifferenceColumn}
-      </div>
+      <div style={column}>{KeyColumn}</div>
+      <div style={column}>{GenePoolColumn}</div>
+      <div style={column}>{ScoresColumn}</div>
+      <div style={column}>{DifferenceColumn}</div>
     </div>
   );
 }
@@ -72,7 +62,7 @@ const GenePoolStyle = {
   display: "Flex",
   flexDirection: "row",
   textAlign: "right"
-}
+};
 
 const row = {
   display: "flex",
@@ -82,10 +72,10 @@ const row = {
 const column = {
   display: "flex",
   flexDirection: "column",
-  marginRight: 5,
+  marginRight: 5
 };
 
-const text =  {
+const text = {
   fontSize: 12,
-  fontFamily: "sans-serif",
+  fontFamily: "sans-serif"
 };
