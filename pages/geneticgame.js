@@ -1,5 +1,10 @@
 import { Component } from "react";
 import Layout from "../components/Layout";
+import Controls from "../components/Controls";
+import Button from "../components/Button";
+import InputNumber from "../components/InputNumber";
+import GeneSequence from "../components/GeneSequence";
+import GenePool from "../components/GenePool";
 
 export default class GeneticGame extends Component {
   constructor(props) {
@@ -17,10 +22,28 @@ export default class GeneticGame extends Component {
     };
   }
 
+  componentDidMount() {
+    this.generateGenePool();
+  }
+
   render() {
+    const { genePool, fitnessPool, rankPool, maxStates } = this.state;
     return (
       <Layout>
-        
+        <Controls>
+          <Button name="Generate Gene Pool" onPress={this.generateGenePool.bind(this)} />
+          <Button name="Measure Fitness of Population" onPress={this.measureFitness.bind(this)} />
+          <Button name="Apply Selective Pressures" onPress={this.applySelectivePressures.bind(this)} />
+          <Button name="Next Generation" onPress={this.nextGeneration.bind(this)} />
+          <Button name="Next 50 Generations" onPress={this.evolve.bind(this)} />
+        </Controls>
+        Generation {this.state.generation}
+        <GenePool
+          genePool={genePool}
+          fitnessPool={fitnessPool}
+          rankPool={rankPool}
+          maxStates={maxStates}
+        />
       </Layout>
     );
   }
@@ -339,3 +362,11 @@ export default class GeneticGame extends Component {
   };
 
 } // end of class
+
+// Styles
+
+const row = {
+  display: "flex",
+  flexDirection: "row",
+  marginTop: 2
+};
