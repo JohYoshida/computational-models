@@ -54,7 +54,7 @@ export default class GeneticGame extends Component {
       let sequence = this.generateGeneSequence();
       genePool.push(sequence);
     }
-    this.setState({ genePool });
+    this.setState({ genePool, fitnessPool: [], rankPool: [], generation: 0 });
   }
 
   /**
