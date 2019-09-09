@@ -30,6 +30,9 @@ export default function Header() {
       <Link href="/strangeloopexplorer">
         <a style={linkStyle}>GEB Strange Loop Explorer</a>
       </Link>
+      <Link href="/populationevolution">
+        <a style={linkStyle}>Population Evolution</a>
+      </Link>
     </div>
   );
 }
