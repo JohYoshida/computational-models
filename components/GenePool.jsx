@@ -1,4 +1,4 @@
-import GeneSequence from "../components/GeneSequence";
+import GeneSequence from "./GeneSequence";
 
 export default function GenePool(props) {
   const { genePool, fitnessPool, rankPool, maxStates} = props;
