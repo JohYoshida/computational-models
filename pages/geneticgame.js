@@ -312,10 +312,9 @@ export default class GeneticGame extends Component {
     this.setState({ genePool, fitnessPool, rankPool });
   }
 
-}
   /**
    * Measures fitness then applies selective pressures
-   * @return {null} Nothing returned
+   * @return {null} Alteres state
    */
   nextGeneration() {
     this.measureFitness().then(() => {
@@ -325,3 +324,18 @@ export default class GeneticGame extends Component {
       this.setState({ generation });
     });
   }
+
+  /**
+   * Evolve 50 generations
+   * TODO: Make number of generations accessible to user input
+   * @return {null} Alters state
+   */
+  evolve = () => {
+    for (var i = 0; i < 50; i++) {
+      setTimeout(() => {
+        this.nextGeneration();
+      }, 100);
+    }
+  };
+
+} // end of class
