@@ -13,6 +13,7 @@ export default class GeneticGame extends Component {
       genePool: [],
       fitnessPool: [],
       rankPool: [],
+      generation: 0,
     };
   }
 
@@ -312,3 +313,15 @@ export default class GeneticGame extends Component {
   }
 
 }
+  /**
+   * Measures fitness then applies selective pressures
+   * @return {null} Nothing returned
+   */
+  nextGeneration() {
+    this.measureFitness().then(() => {
+      this.applySelectivePressures();
+      let { generation } = this.state;
+      generation++
+      this.setState({ generation });
+    });
+  }
