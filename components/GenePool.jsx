@@ -1,7 +1,14 @@
 import GeneSequence from "./GeneSequence";
 
 export default function GenePool(props) {
-  const { genePool, fitnessPool, rankPool, maxStates } = props;
+  const {
+    genePool,
+    fitnessPool,
+    rankPool,
+    timesCooperated,
+    maxStates,
+    rounds
+  } = props;
 
   // Initialize columns
   const KeyColumn = [
@@ -20,6 +27,11 @@ export default function GenePool(props) {
   const DifferenceColumn = [
     <div key={"Rank"} style={text}>
       Rank
+    </div>
+  ];
+  const CooperationColumn = [
+    <div key={"Rank"} style={text}>
+      Cooperation
     </div>
   ];
 
@@ -45,6 +57,19 @@ export default function GenePool(props) {
         {fitnessPool[index]}
       </div>
     );
+    CooperationColumn.push(
+      <div key={index} style={text}>
+        {timesCooperated[index]
+          ? `${Math.round(
+              Number(timesCooperated[index]) *
+                100 /
+                (rounds * maxStates * maxStates) *
+                100
+            ) / 100}%`
+          : ""}
+      </div>
+    );
+    // {timesCooperated[index]}
   });
 
   return (
@@ -53,6 +78,7 @@ export default function GenePool(props) {
       <div style={column}>{GenePoolColumn}</div>
       <div style={column}>{ScoresColumn}</div>
       <div style={column}>{DifferenceColumn}</div>
+      <div style={column}>{CooperationColumn}</div>
     </div>
   );
 }

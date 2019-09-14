@@ -18,6 +18,7 @@ export default class GeneticGame extends Component {
       genePool: [],
       fitnessPool: [],
       rankPool: [],
+      timesCooperated: [],
       generation: 0
     };
   }
@@ -27,7 +28,14 @@ export default class GeneticGame extends Component {
   }
 
   render() {
-    const { genePool, fitnessPool, rankPool, maxStates } = this.state;
+    const {
+      genePool,
+      fitnessPool,
+      rankPool,
+      timesCooperated,
+      maxStates,
+      rounds
+    } = this.state;
     return (
       <Layout>
         <Controls>
@@ -54,7 +62,9 @@ export default class GeneticGame extends Component {
           genePool={genePool}
           fitnessPool={fitnessPool}
           rankPool={rankPool}
+          timesCooperated={timesCooperated}
           maxStates={maxStates}
+          rounds={rounds}
         />
       </Layout>
     );
@@ -89,7 +99,13 @@ export default class GeneticGame extends Component {
       let sequence = this.generateGeneSequence();
       genePool.push(sequence);
     }
-    this.setState({ genePool, fitnessPool: [], rankPool: [], generation: 0 });
+    this.setState({
+      genePool,
+      fitnessPool: [],
+      rankPool: [],
+      timesCooperated: [],
+      generation: 0
+    });
   }
 
   /**
@@ -128,7 +144,8 @@ export default class GeneticGame extends Component {
       context: {
         round: 0,
         score: 0,
-        current: initial
+        current: initial,
+        timesCooperated: 0
       },
       initial,
       states
@@ -154,8 +171,10 @@ export default class GeneticGame extends Component {
       payoff2 = 0;
     if (move1 === 0) {
       // Player 1 cooperates
+      Player1.context.timesCooperated++;
       if (move2 === 0) {
         // Player 2 cooperates
+        Player2.context.timesCooperated++;
         payoff1 = 3;
         Player1.context.current = Player1.states[currentState1].cooperative;
         payoff2 = 3;
@@ -171,6 +190,7 @@ export default class GeneticGame extends Component {
       // Player 1 defects
       if (move2 === 0) {
         // Player 2 cooperates
+        Player2.context.timesCooperated++;
         payoff1 = 5;
         Player1.context.current = Player1.states[currentState1].cooperative;
         payoff2 = 0;
@@ -223,9 +243,11 @@ export default class GeneticGame extends Component {
   measureFitness() {
     const { genePool } = this.state;
     const fitnessPool = [];
-    // Prepare fitness pool
+    const timesCooperated = [];
+    // Prepare pools
     for (var i = 0; i < genePool.length; i++) {
       fitnessPool.push(0);
+      timesCooperated.push(0);
     }
     // Play Repeated Prisoners' Dilemma with every pair of sequences
     for (var i = 0; i < genePool.length; i++) {
@@ -236,9 +258,12 @@ export default class GeneticGame extends Component {
         if (i !== j) {
           fitnessPool[j] += players[1].context.score;
         }
+        // Add cooperation counts to list
+        timesCooperated[i] += players[0].context.timesCooperated;
+        timesCooperated[j] += players[1].context.timesCooperated;
       }
     }
-    this.setState({ fitnessPool });
+    this.setState({ fitnessPool, timesCooperated });
     return new Promise((resolve, reject) => resolve());
   }
 
@@ -248,9 +273,10 @@ export default class GeneticGame extends Component {
    *                  fitnessPool: Ordered array of fitness scores
    */
   orderGenePool() {
-    const { genePool, fitnessPool, poolSize } = this.state;
+    const { genePool, fitnessPool, timesCooperated, poolSize } = this.state;
     const sortedGenePool = [],
       sortedFitnessPool = [],
+      sortedTimesCooperated = [],
       rankPool = [];
     // Sort pools by highest fitness
     let count = 0;
@@ -272,6 +298,10 @@ export default class GeneticGame extends Component {
       // Do the same for the fitness score
       next = fitnessPool.splice(index, 1);
       sortedFitnessPool.push(next[0]);
+      // Again for cooperation pool
+      next = timesCooperated.splice(index, 1);
+      sortedTimesCooperated.push(next[0]);
+      sortedTimesCooperated.push(next[0]);
       // Calculate difference in fitness rank
       rankPool.push(index - rankPool.length + count);
       count++;
@@ -279,6 +309,7 @@ export default class GeneticGame extends Component {
     return {
       genePool: sortedGenePool,
       fitnessPool: sortedFitnessPool,
+      timesCooperated: sortedTimesCooperated,
       rankPool
     };
   }
@@ -331,7 +362,12 @@ export default class GeneticGame extends Component {
    */
   applySelectivePressures() {
     const { survivalChance, poolSize } = this.state;
-    const { genePool, fitnessPool, rankPool } = this.orderGenePool();
+    const {
+      genePool,
+      fitnessPool,
+      rankPool,
+      timesCooperated
+    } = this.orderGenePool();
     let count = 0;
     // Cull low performance gene sequences
     for (var i = 0; i < genePool.length; i++) {
@@ -348,7 +384,7 @@ export default class GeneticGame extends Component {
       let sequence = this.reproduce(genePool);
       genePool.push(sequence);
     }
-    this.setState({ genePool, fitnessPool, rankPool });
+    this.setState({ genePool, fitnessPool, rankPool, timesCooperated });
   }
 
   /**
@@ -376,7 +412,6 @@ export default class GeneticGame extends Component {
       }, 100);
     }
   };
-
 } // end of class
 
 // Styles
