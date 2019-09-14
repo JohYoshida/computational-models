@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import InputNumber from "../components/InputNumber";
 import GeneSequence from "../components/GeneSequence";
 import GenePool from "../components/GenePool";
+import { generateSequence, makePlayer } from "../scripts/finiteautomata";
 
 export default class GeneticGame extends Component {
   constructor(props) {
@@ -71,32 +72,15 @@ export default class GeneticGame extends Component {
   }
 
   /**
-   * Generates a gene sequence of zeroes and ones. Length depends on maxStates.
-   * @return {String} Gene sequence.
-   */
-  generateGeneSequence() {
-    let sequence = "";
-    // Measure the binary digits required to designate each state transition;
-    const digits = (this.state.maxStates - 1).toString(2).length;
-    // Measure the length of the gene sequence
-    const length = digits + this.state.maxStates * (1 + 2 * digits);
-    for (var i = 0; i < length; i++) {
-      let gene = Math.floor(Math.random() * 2);
-      sequence += gene;
-    }
-    return sequence;
-  }
-
-  /**
    * Generates an array of gene sequences and saves it to the state.
    * @return {genePool} Alters state.
    */
   generateGenePool() {
-    const { poolSize } = this.state;
+    const { poolSize, maxStates } = this.state;
     const genePool = [];
     // Fill gene pool
     for (var i = 0; i < poolSize; i++) {
-      let sequence = this.generateGeneSequence();
+      let sequence = generateSequence(maxStates);
       genePool.push(sequence);
     }
     this.setState({
@@ -107,50 +91,6 @@ export default class GeneticGame extends Component {
       generation: 0
     });
   }
-
-  /**
-   * Translates a valid gene sequence into an Agent.
-   * @param  {String} sequence Binary gene sequence.
-   * @param  {Number} id       Sequence's index in gene pool.
-   * @return {Object}          Finite state machine Agent.
-   */
-  makePlayers = id => {
-    const { genePool } = this.state;
-    const sequence = genePool[id];
-    // Measure the binary digits required to designate each transition function
-    const digits = (this.state.maxStates - 1).toString(2).length;
-    // Translate initial state from sequence
-    const initial = parseInt(sequence.slice(0, digits), 2);
-    const states = [];
-    // Fill states
-    for (var i = 0; i < this.state.maxStates; i++) {
-      // Calculate starting index of state packet on sequence
-      let index = digits + i * (1 + 2 * digits);
-      // Translate state data from packet
-      let state = {
-        move: parseInt(sequence.slice(index, index + 1)),
-        cooperative: parseInt(sequence.slice(index + 1, index + 5), 2),
-        cooperative: parseInt(sequence.slice(index + 1, index + 1 + digits), 2),
-        defective: parseInt(
-          sequence.slice(index + 5, index + 1 + 2 * digits),
-          2
-        )
-      };
-      states.push(state);
-    }
-    // Return agent in form of finite state machine.
-    return {
-      id,
-      context: {
-        round: 0,
-        score: 0,
-        current: initial,
-        timesCooperated: 0
-      },
-      initial,
-      states
-    };
-  };
 
   /**
    * Pits two players in a round of Prisoners' Dilemma
@@ -225,7 +165,10 @@ export default class GeneticGame extends Component {
    * @return {Array}      Two players with performance scores for this game
    */
   playGame = (one, two) => {
-    let players = [this.makePlayers(one), this.makePlayers(two)];
+    const { genePool, maxStates } = this.state;
+    const sequenceOne = genePool[one];
+    const sequenceTwo = genePool[two];
+    let players = [makePlayer(sequenceOne, maxStates, one), makePlayer(sequenceTwo, maxStates, two)];
     // Play each round
     for (var i = 0; i < this.state.rounds; i++) {
       players = this.performPrisonersDilemma(players);
