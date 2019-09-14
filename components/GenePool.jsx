@@ -102,6 +102,6 @@ const column = {
 };
 
 const text = {
-  fontSize: 12,
+  fontSize: 13,
   fontFamily: "sans-serif"
 };

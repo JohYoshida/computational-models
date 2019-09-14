@@ -132,5 +132,6 @@ export default function GeneSequence(props) {
 
 const row = {
   display: "flex",
-  flexDirection: "row"
+  flexDirection: "row",
+  marginBottom: 2
 };
