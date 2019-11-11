@@ -13,7 +13,7 @@ export default function GenePool(props) {
   // Initialize columns
   const KeyColumn = [
     <div key={"Sequence"} style={text}>
-      Sequence
+      Rank
     </div>
   ];
   const GenePoolColumn = [
@@ -26,11 +26,11 @@ export default function GenePool(props) {
   ];
   const DifferenceColumn = [
     <div key={"Rank"} style={text}>
-      Rank
+      Change
     </div>
   ];
   const CooperationColumn = [
-    <div key={"Rank"} style={text}>
+    <div key={"Cooperation"} style={text}>
       Cooperation
     </div>
   ];
@@ -74,10 +74,10 @@ export default function GenePool(props) {
 
   return (
     <div style={GenePoolStyle}>
-      <div style={column}>{KeyColumn}</div>
       <div style={column}>{GenePoolColumn}</div>
-      <div style={column}>{ScoresColumn}</div>
+      <div style={column}>{KeyColumn}</div>
       <div style={column}>{DifferenceColumn}</div>
+      <div style={column}>{ScoresColumn}</div>
       <div style={column}>{CooperationColumn}</div>
     </div>
   );
