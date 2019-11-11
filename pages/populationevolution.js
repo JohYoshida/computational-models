@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import InputNumber from "../components/InputNumber";
 import GeneSequence from "../components/GeneSequence";
 import GenePool from "../components/GenePool";
+import Explainer from "../components/Explainer";
 import { generateSequence, makePlayer } from "../scripts/finiteautomata";
 
 export default class GeneticGame extends Component {
@@ -20,12 +21,15 @@ export default class GeneticGame extends Component {
       fitnessPool: [],
       rankPool: [],
       timesCooperated: [],
-      generation: 0
+      generation: 0,
+      explainerSequence: ""
     };
   }
 
   componentDidMount() {
     this.generateGenePool();
+    const explainerSequence = generateSequence(16);
+    this.setState({ explainerSequence });
   }
 
   render() {
@@ -59,14 +63,17 @@ export default class GeneticGame extends Component {
           <Button name="Next 50 Generations" onPress={this.evolve.bind(this)} />
         </Controls>
         Generation {this.state.generation}
-        <GenePool
-          genePool={genePool}
-          fitnessPool={fitnessPool}
-          rankPool={rankPool}
-          timesCooperated={timesCooperated}
-          maxStates={maxStates}
-          rounds={rounds}
-        />
+        <div style={row} >
+          <GenePool
+            genePool={genePool}
+            fitnessPool={fitnessPool}
+            rankPool={rankPool}
+            timesCooperated={timesCooperated}
+            maxStates={maxStates}
+            rounds={rounds}
+          />
+        <Explainer sequence={this.state.explainerSequence}/>
+        </div>
       </Layout>
     );
   }
@@ -313,14 +320,19 @@ export default class GeneticGame extends Component {
     } = this.orderGenePool();
     let count = 0;
     // Cull low performance gene sequences
-    for (var i = 0; i < genePool.length; i++) {
-      // Roll for survival
-      let random = Math.floor(Math.random() * 100);
-      if (random > survivalChance) {
-        // Remove from gene pool
-        genePool.pop();
-        count++;
-      }
+    // for (var i = 0; i < genePool.length; i++) {
+    //   // Roll for survival
+    //   let random = Math.floor((Math.random() * 10) * (Math.random() * 10) * (Math.random() * 10));
+    //   if (random * (i / genePool.length)  > survivalChance) {
+    //     console.log("Removing", i, "from gene pool", random * (i / poolSize), random, i / poolSize);
+    //     // Remove from gene pool
+    //     genePool.pop();
+    //     count++;
+    //   }
+    // }
+    for (var i = 20; i < poolSize; i++) {
+      genePool.pop();
+      count++;
     }
     // Reproduce high performance genes to fill pool
     for (var i = 0; i < count; i++) {
@@ -362,5 +374,10 @@ export default class GeneticGame extends Component {
 const row = {
   display: "flex",
   flexDirection: "row",
-  marginTop: 2
+  justifyContent: "space-between"
+};
+
+const column = {
+  display: "flex",
+  flexDirection: "column",
 };
