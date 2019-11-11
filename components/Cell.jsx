@@ -38,7 +38,8 @@ export default function Cell(props) {
     style = {
       backgroundColor: color,
       height: size * 3,
-      width: size
+      width: size,
+      display: "inline"
     };
   } else if (status === "geneKey") {
     style = {
@@ -46,7 +47,8 @@ export default function Cell(props) {
       height: size * 3,
       width: size * 3,
       fontSize: size * 2,
-      textAlign: "center"
+      textAlign: "center",
+      display: "inline"
     };
   }
   // Misc styles
