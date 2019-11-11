@@ -362,5 +362,10 @@ export default class GeneticGame extends Component {
 const row = {
   display: "flex",
   flexDirection: "row",
-  marginTop: 2
+  justifyContent: "space-between"
+};
+
+const column = {
+  display: "flex",
+  flexDirection: "column",
 };
