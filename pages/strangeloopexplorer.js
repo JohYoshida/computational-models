@@ -1,4 +1,6 @@
-import { Component } from "react";
+import {
+  Component
+} from "react";
 import Layout from "../components/Layout";
 import TwoDPlane from "../components/TwoDPlane";
 import Controls from "../components/Controls";
@@ -30,40 +32,59 @@ export default class GEBFigureGround extends Component {
   }
 
   render() {
-    const { data, x, y, display, firstColor, secondColor } = this.state;
+    const {
+      data,
+      x,
+      y,
+      display,
+      firstColor,
+      secondColor
+    } = this.state;
     return (
       <Layout>
         <Controls>
           <div style={columnStyle}>
-            <InputNumber
-              name="X"
-              val={x}
-              updateVal={this.updateInputX}
-              min={1}
-              max={256}
-              displayValue={false}
-            />
-            <InputNumber
-              name="Y"
-              val={y}
-              updateVal={this.updateInputY}
-              min={1}
-              max={256}
-              displayValue={false}
-            />
-            <InputNumber
-              name="Display Level"
-              val={display}
-              updateVal={this.updateInputDisplay}
-              min={1}
-              max={3}
-              displayRange={false}
-              displayValue={false}
-            />
-          </div>
-          <div style={columnStyle}>
+            <div style={rowStyle}>
+              <div style={columnStyle}>
+                <InputNumber
+                  name="X"
+                  val={x}
+                  updateVal={this.updateInputX}
+                  min={1}
+                  max={256}
+                  displayValue={false}
+                  />
+                <InputNumber
+                  name="Y"
+                  val={y}
+                  updateVal={this.updateInputY}
+                  min={1}
+                  max={256}
+                  displayValue={false}
+                  />
+                <InputNumber
+                  name="Display Level"
+                  val={display}
+                  updateVal={this.updateInputDisplay}
+                  min={1}
+                  max={3}
+                  displayRange={false}
+                  displayValue={false}
+                  />
+              </div>
+              <div style={columnStyle}>
             <ColorPicker id={1} updateColor={this.updateColor} />
             <ColorPicker id={2} updateColor={this.updateColor} />
+          </div>
+            </div>
+            <div>
+              <span>
+                A visualization of the solution to the ground/figure puzzle on pp.
+                73 of Douglas R. Hofstadter's masterpiece Godel, Escher, Bach: an
+                Eternal Golden Braid. Use the controls to change the dimensions
+                of the viewport, and change the display level.
+              </span>
+            </div>
           </div>
         </Controls>
         <TwoDPlane
@@ -80,7 +101,9 @@ export default class GEBFigureGround extends Component {
 
   updateInputX = evt => {
     const x = Number(evt.target.value);
-    this.setState({ x }, () => {
+    this.setState({
+      x
+    }, () => {
       this.extend();
       this.organizeData();
     });
@@ -88,7 +111,9 @@ export default class GEBFigureGround extends Component {
 
   updateInputY = evt => {
     const y = Number(evt.target.value);
-    this.setState({ y }, () => {
+    this.setState({
+      y
+    }, () => {
       this.extend();
       this.organizeData();
     });
@@ -96,22 +121,34 @@ export default class GEBFigureGround extends Component {
 
   updateInputDisplay = evt => {
     const display = Number(evt.target.value);
-    this.setState({ display }, () => {
+    this.setState({
+      display
+    }, () => {
       this.organizeData();
     });
   };
 
   updateColor = (target, color) => {
     if (target === 1) {
-      this.setState({ firstColor: color });
+      this.setState({
+        firstColor: color
+      });
     }
     if (target === 2) {
-      this.setState({ secondColor: color });
+      this.setState({
+        secondColor: color
+      });
     }
   };
 
   extend = () => {
-    const { lvl1, lvl2, lvl3, x, y } = this.state;
+    const {
+      lvl1,
+      lvl2,
+      lvl3,
+      x,
+      y
+    } = this.state;
     const max = x * y;
 
     for (var index = this.state.index; lvl1[index] <= max; index++) {
@@ -125,11 +162,20 @@ export default class GEBFigureGround extends Component {
         lvl2.push(next2);
       }
     }
-    this.setState({ lvl1, lvl2, lvl3, index });
+    this.setState({
+      lvl1,
+      lvl2,
+      lvl3,
+      index
+    });
   };
 
   organizeData = () => {
-    const { display, x, y } = this.state;
+    const {
+      display,
+      x,
+      y
+    } = this.state;
     const data = [{}];
     let lvl;
     if (display === 1) {
@@ -158,7 +204,9 @@ export default class GEBFigureGround extends Component {
         }
       }
     });
-    this.setState({ data });
+    this.setState({
+      data
+    });
   };
 }
 

@@ -1,4 +1,6 @@
-import { Component } from "react";
+import {
+  Component
+} from "react";
 import Layout from "../components/Layout";
 import TwoDPlane from "../components/TwoDPlane";
 import Controls from "../components/Controls";
@@ -26,97 +28,138 @@ export default class CellularAutomata extends Component {
   }
 
   render() {
-    const { rule, x, y, spawnChance, aliveColor, deadColor } = this.state;
+    const {
+      rule,
+      x,
+      y,
+      spawnChance,
+      aliveColor,
+      deadColor
+    } = this.state;
     return (
       <Layout>
         <Controls>
           <div style={columnStyle}>
-            <InputNumber
-              name="Rule"
-              val={rule}
-              updateVal={this.updateRule}
-              min={0}
-              max={255}
-              displayValue={false}
-            />
-            <InputNumber
-              name="X"
-              val={x}
-              updateVal={this.updateInputX}
-              displayValue={false}
-            />
-            <InputNumber
-              name="Spawn Chance"
-              val={spawnChance}
-              updateVal={this.updateSpawnChance}
-              min={1}
-              max={99}
-              displayNumber={false}
-            />
             <div style={rowStyle}>
-              <Button name="Randomize Start" onPress={this.randomizeStart} />
-              <Button name="Reset" onPress={this.resetStart} />
+              <div style={columnStyle}>
+                <InputNumber
+                  name="Rule"
+                  val={rule}
+                  updateVal={this.updateRule}
+                  min={0}
+                  max={255}
+                  displayValue={false}
+                />
+                <InputNumber
+                  name="Width"
+                  val={x}
+                  updateVal={this.updateInputX}
+                  displayValue={false}
+                />
+                <InputNumber
+                  name="Spawn Chance"
+                  val={spawnChance}
+                  updateVal={this.updateSpawnChance}
+                  min={1}
+                  max={99}
+                  displayNumber={false}
+                />
+                <div style={rowStyle}>
+                  <Button name="Randomize Start" onPress={this.randomizeStart} />
+                  <Button name="Reset" onPress={this.resetStart} />
+                </div>
+                <div style={rowStyle}>
+                  <Button name="Advance State" onPress={this.advanceState} />
+                  <Button
+                    name="Rapid Advance State"
+                    onPress={this.rapidAdvanceState}
+                  />
+                </div>
+              </div>
+              <div style={columnStyle}>
+                <span>Rules</span>
+                <RulePanel
+                  changeRule={this.changeRule}
+                  binaryRule={makeBinaryRule(rule)}
+                  aliveColor={aliveColor}
+                  deadColor={deadColor}
+                />
+              </div>
+              <div style={columnStyle}>
+                <ColorPicker id={1} updateColor={this.updateColor} />
+                <ColorPicker id={2} updateColor={this.updateColor} />
+              </div>
             </div>
             <div style={rowStyle}>
-              <Button name="Advance State" onPress={this.advanceState} />
-              <Button
-                name="Rapid Advance State"
-                onPress={this.rapidAdvanceState}
-              />
+              <span>
+                Cellular automata interacting along one dimension create
+                coherent macrostructures in two dimensions.
+                Use the controls to change the width of the row, the spawn
+                chance, and the rule the automata follow.
+                The vertical Rules column describes each possible state an
+                automata can be in - its color, and the color of its left and
+                right neighours - as well as the state it will transition to in
+                the next row.
+                Use the Rule slider to explore the entire possibilty
+                space of this automata. This model is based on the description
+                in Chapter 8 of Complex Adaptive Systems: An Introduction to
+                Computational Models of Social Life, by John H. Miller and Scott E. Page.
+                (Try out rules 22, 90, and 110 for some particularly complex structures)
+              </span>
             </div>
-          </div>
-          <div style={columnStyle}>
-            <RulePanel
-              changeRule={this.changeRule}
-              binaryRule={makeBinaryRule(rule)}
-              aliveColor={aliveColor}
-              deadColor={deadColor}
-            />
-          </div>
-          <div style={columnStyle}>
-            <ColorPicker id={1} updateColor={this.updateColor} />
-            <ColorPicker id={2} updateColor={this.updateColor} />
           </div>
         </Controls>
-        <TwoDPlane
-          x={x}
-          y={y}
-          data={this.state.data}
-          firstColor={deadColor}
-          secondColor={aliveColor}
-          defaultStatus="dead"
-        />
+          <TwoDPlane
+            x={x}
+            y={y}
+            data={this.state.data}
+            firstColor={deadColor}
+            secondColor={aliveColor}
+            defaultStatus="dead"
+          />
       </Layout>
     );
   }
 
   updateInputX = evt => {
     const x = Number(evt.target.value);
-    this.setState({ x });
+    this.setState({
+      x
+    });
   };
 
   updateInputY = evt => {
     const y = Number(evt.target.value);
-    this.setState({ y });
+    this.setState({
+      y
+    });
   };
 
   updateSpawnChance = evt => {
     const spawnChance = Number(evt.target.value);
-    this.setState({ spawnChance });
+    this.setState({
+      spawnChance
+    });
   };
 
   updateColor = (target, color) => {
     if (target === 1) {
-      this.setState({ deadColor: color });
+      this.setState({
+        deadColor: color
+      });
     }
     if (target === 2) {
-      this.setState({ aliveColor: color });
+      this.setState({
+        aliveColor: color
+      });
     }
   };
 
   updateRule = evt => {
     const rule = Number(evt.target.value);
-    this.setState({ rule });
+    this.setState({
+      rule
+    });
   };
 
   changeRule = (index, value) => {
@@ -128,11 +171,18 @@ export default class CellularAutomata extends Component {
     arr[index] = value;
     let newBinaryRule = arr.join("");
     const rule = parseInt(newBinaryRule, 2);
-    this.setState({ rule });
+    this.setState({
+      rule
+    });
   };
 
   advanceState = () => {
-    const { data, rule, x, y } = this.state;
+    const {
+      data,
+      rule,
+      x,
+      y
+    } = this.state;
     const state = {};
     // Get binary representation of rule #
     const binaryRule = makeBinaryRule(rule);
@@ -144,7 +194,10 @@ export default class CellularAutomata extends Component {
       }
     }
     data.push(state);
-    this.setState({ y: data.length, data });
+    this.setState({
+      y: data.length,
+      data
+    });
   };
 
   rapidAdvanceState = () => {
@@ -154,11 +207,17 @@ export default class CellularAutomata extends Component {
   };
 
   resetStart = () => {
-    this.setState({ y: 1, data: [{}] });
+    this.setState({
+      y: 1,
+      data: [{}]
+    });
   };
 
   randomizeStart = () => {
-    const { x, spawnChance } = this.state;
+    const {
+      x,
+      spawnChance
+    } = this.state;
     const data = [{}];
     for (var i = 1; i <= x; i++) {
       let random = Math.floor(Math.random() * 100) + 1;
@@ -166,7 +225,10 @@ export default class CellularAutomata extends Component {
         data[0][i] = "alive";
       }
     }
-    this.setState({ y: 1, data });
+    this.setState({
+      y: 1,
+      data
+    });
   };
 }
 

@@ -1,4 +1,6 @@
-import { Component } from "react";
+import {
+  Component
+} from "react";
 import KeyHandler from "react-key-handler";
 import Layout from "../components/Layout";
 import Controls from "../components/Controls";
@@ -44,66 +46,80 @@ export default class GameOfLife extends Component {
       <Layout>
         <Controls>
           <div style={columnStyle}>
-            <InputNumber
-              name={"X"}
-              val={x}
-              updateVal={this.updateInputX}
-              displayValue={false}
-            />
-            <InputNumber
-              name={"Y"}
-              val={y}
-              updateVal={this.updateInputY}
-              displayValue={false}
-            />
-            <InputNumber
-              name={"Random Spawn Chance"}
-              val={spawnChance}
-              max={100}
-              updateVal={this.updateInputSpawnChance}
-              displayValue={false}
-            />
             <div style={rowStyle}>
-              <Button name="Randomize" onPress={this.randomize} />
-              <Button name="Reset" onPress={this.reset} />
-              <Button name="Step Forward" onPress={this.stepForward} />
-              <Button
-                name={`Evolve ${evolveSteps} Steps`}
-                onPress={this.evolve}
-              />
-              <InputNumber
-                name={""}
-                val={evolveSteps}
-                updateVal={this.updateInputEvolveSteps}
-                displayRange={false}
-                displayValue={false}
-              />
+              <div style={columnStyle}>
+                <InputNumber
+                  name={"X"}
+                  val={x}
+                  updateVal={this.updateInputX}
+                  displayValue={false}
+                />
+                <InputNumber
+                  name={"Y"}
+                  val={y}
+                  updateVal={this.updateInputY}
+                  displayValue={false}
+                />
+                <InputNumber
+                  name={"Random Spawn Chance"}
+                  val={spawnChance}
+                  max={100}
+                  updateVal={this.updateInputSpawnChance}
+                  displayValue={false}
+                />
+                <div style={rowStyle}>
+                  <Button name="Randomize" onPress={this.randomize} />
+                  <Button name="Reset" onPress={this.reset} />
+                  <Button name="Step Forward" onPress={this.stepForward} />
+                  <Button
+                    name={`Evolve ${evolveSteps} Steps`}
+                    onPress={this.evolve}
+                  />
+                  <InputNumber
+                    name={""}
+                    val={evolveSteps}
+                    updateVal={this.updateInputEvolveSteps}
+                    displayRange={false}
+                    displayValue={false}
+                  />
+                </div>
+                <InputNumber
+                  name={"Step"}
+                  val={step}
+                  max={history.length}
+                  updateVal={this.updateInputStep}
+                  displayNumber={false}
+                />
+                <div style={rowStyle}>
+                  <span>Stamps</span>
+                  <Button
+                    name="Cell"
+                    onPress={this.changeStamp.bind(this, "Cell")}
+                  />
+                  <Button
+                    name="Diamond"
+                    onPress={this.changeStamp.bind(this, "Diamond")}
+                  />
+                  <Button
+                    name="Pulsar"
+                    onPress={this.changeStamp.bind(this, "Pulsar")}
+                  />
+                </div>
+              </div>
+              <div style={columnStyle}>
+                <ColorPicker id={1} updateColor={this.updateColor} />
+                <ColorPicker id={2} updateColor={this.updateColor} />
+              </div>
             </div>
-            <InputNumber
-              name={"Step"}
-              val={step}
-              max={history.length}
-              updateVal={this.updateInputStep}
-              displayNumber={false}
-            />
-            <div style={rowStyle}>
-              <Button
-                name="Cell"
-                onPress={this.changeStamp.bind(this, "Cell")}
-              />
-              <Button
-                name="Diamond"
-                onPress={this.changeStamp.bind(this, "Diamond")}
-              />
-              <Button
-                name="Pulsar"
-                onPress={this.changeStamp.bind(this, "Pulsar")}
-              />
+            <div class="explanation">
+              <span>
+                Conway's famous Game of Life.
+                Use the control panel to change the dimensions and color of the game
+                board, and the spawn chance upon randomization.
+                You can apply stamps to the game board, and set the number of steps to evolve.
+                Use 'a' and 'd' to navigate back and forth between steps.
+              </span>
             </div>
-          </div>
-          <div style={columnStyle}>
-            <ColorPicker id={1} updateColor={this.updateColor} />
-            <ColorPicker id={2} updateColor={this.updateColor} />
           </div>
         </Controls>
         <TwoDPlane
@@ -125,32 +141,49 @@ export default class GameOfLife extends Component {
 
   updateInputX = evt => {
     const x = Number(evt.target.value);
-    this.setState({ x });
+    this.setState({
+      x
+    });
   };
 
   updateInputY = evt => {
     const y = Number(evt.target.value);
-    this.setState({ y });
+    this.setState({
+      y
+    });
   };
 
   updateInputSpawnChance = evt => {
     const spawnChance = Number(evt.target.value);
-    this.setState({ spawnChance });
+    this.setState({
+      spawnChance
+    });
   };
 
   updateInputStep = evt => {
-    const { history } = this.state;
+    const {
+      history
+    } = this.state;
     const step = Number(evt.target.value);
-    this.setState({ step, data: history[step - 1] });
+    this.setState({
+      step,
+      data: history[step - 1]
+    });
   };
 
   updateInputEvolveSteps = evt => {
     const evolveSteps = Number(evt.target.value);
-    this.setState({ evolveSteps });
+    this.setState({
+      evolveSteps
+    });
   };
 
   handleKeyPress = evt => {
-    const { history, data, step } = this.state;
+    const {
+      history,
+      data,
+      step
+    } = this.state;
     if (evt.key === "a") {
       if (history.length > 1 && step > 1) {
         this.setState({
@@ -174,7 +207,14 @@ export default class GameOfLife extends Component {
   };
 
   handleClick = (i, j) => {
-    const { data, history, step, stamp, x, y } = this.state;
+    const {
+      data,
+      history,
+      step,
+      stamp,
+      x,
+      y
+    } = this.state;
     let pattern = makePatternCoords(stamp, i, j, x, y);
     pattern.forEach(pos => {
       if (data[pos[0]][pos[1]] === "hover" || !data[pos[0]][pos[1]]) {
@@ -184,44 +224,69 @@ export default class GameOfLife extends Component {
       }
     });
     history[step - 1] = data;
-    this.setState({ data, history });
+    this.setState({
+      data,
+      history
+    });
   };
 
   handleMouseEnter = (i, j) => {
-    const { data, stamp, x, y } = this.state;
+    const {
+      data,
+      stamp,
+      x,
+      y
+    } = this.state;
     let pattern = makePatternCoords(stamp, i, j, x, y);
     pattern.forEach(pos => {
-      data[pos[0]][pos[1]]
-        ? (data[pos[0]][pos[1]] += " hover")
-        : (data[pos[0]][pos[1]] = "hover");
+      data[pos[0]][pos[1]] ?
+        (data[pos[0]][pos[1]] += " hover") :
+        (data[pos[0]][pos[1]] = "hover");
     });
-    this.setState({ data });
+    this.setState({
+      data
+    });
   };
 
   handleMouseLeave = (i, j) => {
-    const { data, stamp, x, y } = this.state;
+    const {
+      data,
+      stamp,
+      x,
+      y
+    } = this.state;
     let pattern = makePatternCoords(stamp, i, j, x, y);
     pattern.forEach(pos => {
       if (data[pos[0]][pos[1]]) {
-        data[pos[0]][pos[1]] === "hover"
-          ? delete data[pos[0]][pos[1]]
-          : (data[pos[0]][pos[1]] = data[pos[0]][pos[1]].replace(" hover", ""));
+        data[pos[0]][pos[1]] === "hover" ?
+          delete data[pos[0]][pos[1]] :
+          (data[pos[0]][pos[1]] = data[pos[0]][pos[1]].replace(" hover", ""));
       }
     });
-    this.setState({ data });
+    this.setState({
+      data
+    });
   };
 
   updateColor = (target, color) => {
     if (target === 1) {
-      this.setState({ deadColor: color });
+      this.setState({
+        deadColor: color
+      });
     }
     if (target === 2) {
-      this.setState({ aliveColor: color });
+      this.setState({
+        aliveColor: color
+      });
     }
   };
 
   randomize = () => {
-    const { x, y, spawnChance } = this.state;
+    const {
+      x,
+      y,
+      spawnChance
+    } = this.state;
     const data = [];
     const history = [];
     for (var i = 1; i <= y; i++) {
@@ -235,21 +300,36 @@ export default class GameOfLife extends Component {
       data.push(row);
     }
     history.push(data);
-    this.setState({ step: 1, data, history });
+    this.setState({
+      step: 1,
+      data,
+      history
+    });
   };
 
   reset = () => {
-    const { y } = this.state;
+    const {
+      y
+    } = this.state;
     const data = [];
     for (var i = 0; i < y; i++) {
       data.push({});
     }
     const history = [data];
-    this.setState({ step: 1, data, history });
+    this.setState({
+      step: 1,
+      data,
+      history
+    });
   };
 
   stepForward = () => {
-    const { x, y, data, history } = this.state;
+    const {
+      x,
+      y,
+      data,
+      history
+    } = this.state;
     const newData = [];
     for (var i = 0; i < y; i++) {
       let row = {};
@@ -264,11 +344,17 @@ export default class GameOfLife extends Component {
       newData.push(row);
     }
     history.push(newData);
-    this.setState({ data: newData, history, step: history.length });
+    this.setState({
+      data: newData,
+      history,
+      step: history.length
+    });
   };
 
   evolve = () => {
-    const { evolveSteps } = this.state;
+    const {
+      evolveSteps
+    } = this.state;
     for (var i = 0; i < evolveSteps; i++) {
       setTimeout(() => {
         this.stepForward();
@@ -277,7 +363,9 @@ export default class GameOfLife extends Component {
   };
 
   changeStamp = type => {
-    this.setState({ stamp: type });
+    this.setState({
+      stamp: type
+    });
   };
 }
 
