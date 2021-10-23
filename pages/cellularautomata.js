@@ -102,8 +102,8 @@ export default class CellularAutomata extends Component {
                 the next row.
                 Use the Rule slider to explore the entire possibilty
                 space of this automata. This model is based on the description
-                in Chapter 8 of Complex Adaptive Systems: An Introduction to
-                Computational Models of Social Life, by John H. Miller and Scott E. Page.
+                in Chapter 8 of <em>Complex Adaptive Systems: An Introduction to
+                Computational Models of Social Life</em>, by John H. Miller and Scott E. Page.
                 (Try out rules 22, 90, and 110 for some particularly complex structures)
               </span>
             </div>

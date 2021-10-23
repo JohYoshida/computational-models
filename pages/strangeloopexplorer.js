@@ -80,8 +80,9 @@ export default class GEBFigureGround extends Component {
             <div>
               <span>
                 A visualization of the solution to the ground/figure puzzle on pp.
-                73 of Douglas R. Hofstadter's masterpiece Godel, Escher, Bach: an
-                Eternal Golden Braid. Use the controls to change the dimensions
+                73 of <em>Godel, Escher, Bach: an Eternal Golden Braid</em>,
+                the masterpiece by Douglas R. Hofstadter. 
+                Use the controls to change the dimensions
                 of the viewport, and change the display level.
               </span>
             </div>
